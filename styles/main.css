@@ -1,0 +1,139 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.header{
+    height: 5vh;
+    padding: 10px;
+    background: #000;
+    color: #eaeaea;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+
+.main-content{
+    display: flex;
+    height: 93vh;
+    width: 100%;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.menu{
+    min-height: 100vh;
+    width: 30%;
+    overflow: auto;
+    background-color: #eaeaea;
+}
+
+.custom{
+    width: 70%;
+    padding: 20px;
+    overflow: auto;
+}
+
+.connect-input{
+    padding: 5px;
+    border: none;
+}
+
+.connect-button{
+    padding: 5px;
+    background: lightcoral;
+    border: none;
+}
+
+#consigne{
+    margin: 20px;
+}
+
+#verify-button{
+    margin: 20px;
+}
+
+#result{
+    margin: 20px;
+}
+/* exercice page */
+
+/* Style pour les onglets */
+.tab {
+    overflow: hidden;
+    padding: 20px;
+}
+  
+.tab button {
+    background-color: #f1f1f1;
+    float: left;
+    border: 1px solid #ccc;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  /* Style pour les éditeurs Ace */
+.tabcontent {
+  display: none; 
+}
+
+.tablinks{
+    padding: 10px;
+    margin: 1px;
+}
+
+.lang-title{
+    margin: 20px;
+}
+
+#previewEditor{
+    width: 10%;
+    height: 10%;
+    opacity: 0;
+}
+
+#htmlEditor{
+    width: 95%;
+    height: 60vh;
+    margin: 20px;
+    font-size: 16px;
+    z-index: 0;
+}
+
+#cssEditor{
+    width: 95%;
+    height: 60vh;
+    margin: 20px;
+    font-size: 16px;
+    z-index: 0;
+}
+
+#jsEditor{
+    width: 95%;
+    height: 60vh;
+    margin: 20px;
+    font-size: 16px;
+    z-index: 0;
+}
+
+#preview-content{
+    width: 90%;
+    height: 60vh;
+    margin: 20px;
+    font-size: 16px;
+    overflow: auto;
+}
+
+p{
+    margin-top: 10px;
+}
+
+  
+
+
+  
