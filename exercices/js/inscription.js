@@ -126,30 +126,84 @@ function checkResult() {
 
     // Vérification de la présence d'une balise <form>
     const containsForm = /<form[^>]*>/i.test(editorContent);
-
-    // Vérification des éléments d'entrée (input)
-    const containsEmailInput = /<input[^>]*type=["']?email["']?[^>]*\s+id=["']?\w+["']?\s+for=["']?\w+["']?/i.test(editorContent);
-    const containsTextInput = /<input[^>]*type=["']?text["']?[^>]*\s+id=["']?\w+["']?\s+for=["']?\w+["']?/i.test(editorContent);
-    const containsPasswordInput = /<input[^>]*type=["']?password["']?[^>]*\s+id=["']?\w+["']?\s+for=["']?\w+["']?/i.test(editorContent);
-
-    // Vérification des cases à cocher (checkbox) et boutons radio (radio)
-    const containsCheckboxes = /<input[^>]*type=["']?(checkbox|radio)["']?[^>]*\s+id=["']?\w+["']?\s+for=["']?\w+["']?/ig.test(editorContent);
-
-    // Vérification de la balise <select> avec attribut id
-    const selectMatch = /<select[^>]*\s+id=["']?(\w+)["']?[^>]*\s+for=["']?\1["']?/i.test(editorContent);
+    const inputEmailFound = /<input[^>]*type="email"/.test(editorContent);
+    const inputTextFound = /<input[^>]*type="text"/.test(editorContent);
+    const inputPasswordFound = /<input[^>]*type="password"/.test(editorContent);
+    const selectFound = /<select[^>]*>/.test(editorContent);
+    const checkboxMatches = (editorContent.match(/<input[^>]*type="checkbox"/ig) || []).length;
+    const radioMatches = (editorContent.match(/<input[^>]*type="radio"/ig) || []).length;
+    const buttonOrSubmitFound = /<button[^>]*|<input[^>]*type="submit"/.test(editorContent);
+    const resetButtonFound = /<button[^>]*type="reset"|<input[^>]*type="reset"/.test(editorContent);
 
     // Vérification du nombre de balises <option> dans la balise <select>
-    const optionCount = (editorContent.match(/<select[^>]*>\s*<option[^>]*>/ig) || []).length;
+    const optionCount = (editorContent.match(/<option[^>]*>/ig) || []).length;
 
-    // Vérification des boutons de soumission et de réinitialisation
-    const containsSubmitButton = /<button[^>]*type=["']?submit["']?[^>]*>|<input[^>]*type=["']?submit["']?[^>]*>/i.test(editorContent);
-    const containsResetButton = /<button[^>]*type=["']?reset["']?[^>]*>|<input[^>]*type=["']?reset["']?[^>]*>/i.test(editorContent);
+    function labelForAttributeExists(content, id) {
+        var labelRegex = new RegExp('<label[^>]*for="' + id + '"', 'ig');
+        return labelRegex.test(content);
+    }
 
-    // Comptage des cases à cocher (checkbox)
-    const checkboxCount = (editorContent.match(/<input[^>]*type=["']?checkbox["']?[^>]*\s+id=["']?\w+["']?\s+for=["']?\w+["']?/ig) || []).length;
 
-    // Comptage des boutons radio (radio)
-    const radioCount = (editorContent.match(/<input[^>]*type=["']?radio["']?[^>]*\s+id=["']?\w+["']?\s+for=["']?\w+["']?/ig) || []).length;
+    // Vérifiez pour chaque ID
+    const inputEmailIds = /<input[^>]*type="email"[^>]*id="([^"]+)"/i.exec(editorContent);
+    if (
+        !inputEmailFound || !inputEmailIds || !labelForAttributeExists(editorContent, inputEmailIds[1])
+    ) {
+        const resultRow = document.createElement('p');
+        resultRow.style.color = "red";
+        resultRow.textContent = "Le contenu ne contient pas de champ email avec son label et/ou le label est incorrect.";
+        resultDiv.appendChild(resultRow);
+    }
+
+    const inputTextIds = /<input[^>]*type="text"[^>]*id="([^"]+)"/i.exec(editorContent);
+    if (
+        !inputTextFound || !inputTextIds || !labelForAttributeExists(editorContent, inputTextIds[1])
+    ) {
+        const resultRow = document.createElement('p');
+        resultRow.style.color = "red";
+        resultRow.textContent = "Le contenu ne contient pas de champ texte avec son label et/ou le label est incorrect.";
+        resultDiv.appendChild(resultRow);
+    }
+
+    const inputPasswordIds = /<input[^>]*type="password"[^>]*id="([^"]+)"/i.exec(editorContent);
+    if (
+        !inputPasswordFound || !inputPasswordIds || !labelForAttributeExists(editorContent, inputPasswordIds[1])
+    ) {
+        const resultRow = document.createElement('p');
+        resultRow.style.color = "red";
+        resultRow.textContent = "Le contenu ne contient pas de champ pour le mot de passe avec son label et/ou le label est incorrect.";
+        resultDiv.appendChild(resultRow);
+    }
+
+    const selectIds = /<select[^>]*id="([^"]+)"/i.exec(editorContent);
+    if (
+        !selectFound || !selectIds || !labelForAttributeExists(editorContent, selectIds[1])
+    ) {
+        const resultRow = document.createElement('p');
+        resultRow.style.color = "red";
+        resultRow.textContent = "Le contenu ne contient pas de champ de liste avec son label et/ou le label est incorrect.";
+        resultDiv.appendChild(resultRow);
+    }
+
+    const checkboxIds = (editorContent.match(/<input[^>]*type="checkbox"[^>]*id="([^"]+)"/ig) || []).map(match => /id="([^"]+)"/.exec(match)[1]);
+    for (const id of checkboxIds) {
+        if (!labelForAttributeExists(editorContent, id)) {
+            const resultRow = document.createElement('p');
+            resultRow.style.color = "red";
+            resultRow.textContent = "Le contenu ne contient pas de case à cocher avec son label et/ou le label est incorrect.";
+            resultDiv.appendChild(resultRow);
+        }
+    }
+
+    const radioIds = (editorContent.match(/<input[^>]*type="radio"[^>]*id="([^"]+)"/ig) || []).map(match => /id="([^"]+)"/.exec(match)[1]);
+    for (const id of radioIds) {
+        if (!labelForAttributeExists(editorContent, id)) {
+            const resultRow = document.createElement('p');
+            resultRow.style.color = "red";
+            resultRow.textContent = "Le contenu ne contient pas de bouton radio avec son label et/ou le label est incorrect.";
+            resultDiv.appendChild(resultRow);
+        }
+    }
 
     if (!containsForm) {
         const resultRow = document.createElement('p');
@@ -158,49 +212,29 @@ function checkResult() {
         resultDiv.appendChild(resultRow);
     }
 
-    if (!containsEmailInput) {
-        const resultRow = document.createElement('p');
-        resultRow.style.color = "red";
-        resultRow.textContent = "Le contenu ne contient pas de champ email avec un label correspondant";
-        resultDiv.appendChild(resultRow);
-    }
 
-    if (!containsTextInput) {
-        const resultRow = document.createElement('p');
-        resultRow.style.color = "red";
-        resultRow.textContent = "Le contenu ne contient pas de champ texte avec un label correspondant.";
-        resultDiv.appendChild(resultRow);
-    }
-
-    if (!containsPasswordInput) {
-        const resultRow = document.createElement('p');
-        resultRow.style.color = "red";
-        resultRow.textContent = "Le contenu ne contient pas un champ de mot de passe avec un label correspondant.";
-        resultDiv.appendChild(resultRow);
-    }
-
-    if (!containsCheckboxes && checkboxCount < 2 && radioCount < 2) {
+    if (checkboxMatches !== 2 && radioMatches !== 2) {
         const resultRow = document.createElement('p');
         resultRow.style.color = "red";
         resultRow.textContent = "Le contenu ne contient pas 2 cases à cocher et/ou 2 boutons radio avec des labels correspondants.";
         resultDiv.appendChild(resultRow);
     }
 
-    if (!selectMatch && optionCount < 3) {
+    if (optionCount < 3) {
         const resultRow = document.createElement('p');
         resultRow.style.color = "red";
         resultRow.textContent = "Le contenu ne contient pas de liste d'option et/ou n'a pas 3 options.";
         resultDiv.appendChild(resultRow);
     }
 
-    if (!containsSubmitButton) {
+    if (!buttonOrSubmitFound) {
         const resultRow = document.createElement('p');
         resultRow.style.color = "red";
         resultRow.textContent = "Le contenu ne contient un bouton de soumission.";
         resultDiv.appendChild(resultRow);
     }
 
-    if (!containsResetButton) {
+    if (!resetButtonFound) {
         const resultRow = document.createElement('p');
         resultRow.style.color = "red";
         resultRow.textContent = "Le contenu ne contient pas  un bouton de réinitialisation.";
@@ -209,13 +243,13 @@ function checkResult() {
 
     if(
         containsForm && 
-        containsEmailInput && 
-        containsTextInput && 
-        containsPasswordInput && 
-        containsSubmitButton && 
-        containsResetButton &&
-        containsCheckboxes && checkboxCount === 2 && radioCount === 2 &&
-        selectMatch && optionCount === 3
+        inputEmailFound && inputEmailIds && labelForAttributeExists(editorContent, inputEmailIds[1]) && 
+        inputTextFound && inputTextIds && labelForAttributeExists(editorContent, inputTextIds[1]) && 
+        inputPasswordFound && inputPasswordIds && labelForAttributeExists(editorContent, inputPasswordIds[1]) && 
+        buttonOrSubmitFound && 
+        resetButtonFound &&
+        checkboxMatches === 2 && radioMatches === 2 &&
+        selectFound && selectIds && labelForAttributeExists(editorContent, selectIds[1]) && optionCount === 3
     ){
         const resultRow = document.createElement('p');
         resultRow.style.color = "green";
