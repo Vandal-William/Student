@@ -1,7 +1,6 @@
 import { createMenuNoConnect } from "./createMenuNoConnect.js";
 import { activeMarked } from "./marked.js";
 
-
 createMenuNoConnect();
 activeMarked('./cours/bienvenu.md');
 

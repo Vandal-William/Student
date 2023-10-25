@@ -1,5 +1,4 @@
 export function activeMarked(url){
-    
     const urlPage = url;
     const markdownFileURL = urlPage
     const markdownPreview = document.getElementById("markdownPreview");

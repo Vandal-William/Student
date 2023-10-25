@@ -33,6 +33,7 @@ export function createMenuConnect( ){
                     headerElement.style.color = "white"
                     headerElement.style.cursor = "pointer";
                     headerElement.style.padding = "10px";
+                    headerElement.style.borderBottom = "1px solid black";
                     headerElement.textContent = section.title;
                     
                     if(lang){

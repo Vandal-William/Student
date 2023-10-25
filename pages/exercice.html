@@ -57,7 +57,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const param = urlParams.get('id');
         const scriptTag = document.getElementById('target');
-        scriptTag.src = `./js/${param}.js`;
+        scriptTag.src = `../exercices/js/${param}.js`;
 
         const exerciceTitle = document.querySelector('#exercice-title');
         exerciceTitle.textContent = param;

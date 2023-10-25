@@ -48,7 +48,18 @@ const menu = [
                         isActive: true
                     }
                 ]
+            },
+            {
+                lesson_title: "HTML - Les tableaux",
+                path: "./cours/html_tableaux.md",
+                user:[
+                    {
+                        name: "gtimeo",
+                        isActive: false
+                    }
+                ]
             }
+
         ]
            
     },
