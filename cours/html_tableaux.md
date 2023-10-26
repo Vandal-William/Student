@@ -138,6 +138,6 @@ Les tableaux HTML peuvent également être enrichis avec d'autres balises pour c
   </tfoot>
 </table>
 
-## Liste d'exercices
+# Exercice 
 
-https://vscode.dev/github/students-com/exemple
+<a target="_blank" style="background: lightcoral; padding:10px; color:black; margin:20px; text-decoration:none;" href="https://ominous-goggles-gwj4xxg5gvv2vqwp.github.dev/">Générer l'exercice dans Codespace<a>

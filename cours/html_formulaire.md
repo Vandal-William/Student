@@ -288,9 +288,3 @@ Un formulaire en HTML est un élément essentiel permettant aux utilisateurs de 
 ``accept`` : Pour les champs de type "file", spécifie les types de fichiers acceptés pour l'envoi.
 
 ## Liste d'exercices
-
-<ul class="ul">
-  <li class="li"><a class="a" target="_blank" href="../pages/exercice.html?id=connexion">Créer un formulaire de connexion</a></li>
-  <li class="li"><a class="a" target="_blank" href="../pages/exercice.html?id=inscription">Créer un formulaire d'instcription</a></li>
-  <li class="li"><a class="a" target="_blank" href="../pages/exercice.html?id=contact">Créer un formulaire de contact</a></li>
-</ul>
