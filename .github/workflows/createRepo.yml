@@ -1,0 +1,15 @@
+name: Créer un dépôt depuis un modèle
+
+on:
+  repository_dispatch:
+    types: [create-repo]
+
+jobs:
+  create-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Créer un dépôt
+      run: |
+        # Placez ici votre commande pour créer un dépôt à partir du modèle
+        gh repo create MonProjet --template=students-com/exemple

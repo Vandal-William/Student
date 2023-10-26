@@ -140,3 +140,4 @@ Les tableaux HTML peuvent également être enrichis avec d'autres balises pour c
 
 ## Liste d'exercices
 
+https://vscode.dev/github/students-com/exemple

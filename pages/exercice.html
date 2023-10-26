@@ -10,9 +10,10 @@
 </head>
 <body>
     <header class="header">
-        <h1 id="exercice-title"></h1>
+        <h1 id="exercice-title"></h1> 
+        <button id="generate">Generer le challenge</button> 
     </header>
-
+    
     <div class="tab">
         <button class="tablinks" onclick="openTab('html')">HTML</button>
         <button class="tablinks" onclick="openTab('css')">CSS</button>
@@ -62,6 +63,27 @@
         const exerciceTitle = document.querySelector('#exercice-title');
         exerciceTitle.textContent = param;
 
+        const generateRepoButton = document.getElementById('generate');
+
+        generateRepoButton.addEventListener("click", async () =>{
+            try {
+                const response = await fetch('/.github/workflows/create-repo/dispatch', {
+                method: 'POST',
+                body: JSON.stringify({ ref: 'create-repo' }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                });
+
+                if (response.ok) {
+                alert('Dépôt créé avec succès !');
+                } else {
+                alert('Erreur lors de la création du dépôt.');
+                }
+            } catch (error) {
+                console.error('Erreur :', error);
+            }
+        })    
     </script>
 </body>
 </html>

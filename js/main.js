@@ -4,16 +4,19 @@ import { activeMarked } from "./marked.js";
 import { firebaseData } from "./firbaseData.js";
 
 const home = document.querySelector('#site-title');
-home.style.cursor = "pointer";
+if(home){
+    home.style.cursor = "pointer";
+}
+
 const inputMail = document.querySelector('#user-info');
 const inputPass = document.querySelector('#password');
 const connectButton = document.querySelector('#submit-info');
 const disconnectButton = document.querySelector('#disconect');
 const submitButton = document.querySelector('#submit-info');
 const accordionContainer = document.querySelector('.menu');
+const markdownPreview = document.getElementById("markdownPreview");
 
 activeMarked('./cours/bienvenu.md');
-
 
 auth.onAuthStateChanged(user =>{
     if(user){
@@ -21,6 +24,7 @@ auth.onAuthStateChanged(user =>{
         inputPass.style.display = "none"
         inputMail.style.display = "none"
         disconnectButton.style.display = "block"
+        accordionContainer.style.display = "block"
 
         db.collection('access').get().then(snap => {
             const access = firebaseData(snap.docs);
@@ -35,6 +39,10 @@ auth.onAuthStateChanged(user =>{
         inputPass.style.display = "inline-block"
         inputMail.style.display = "inline-block"
         disconnectButton.style.display = "none"
+        accordionContainer.style.display = "none"
+        markdownPreview.style.margin = "auto"
+        markdownPreview.style.height = "91vh"
+        markdownPreview.style.overflow = "auto"
     }
 })
 
