@@ -11,7 +11,6 @@
 <body>
     <header class="header">
         <h1 id="exercice-title"></h1> 
-        <button id="generate">Generer le challenge</button> 
     </header>
     
     <div class="tab">
@@ -63,31 +62,8 @@
         const exerciceTitle = document.querySelector('#exercice-title');
         exerciceTitle.textContent = param;
 
-        const generateRepoButton = document.getElementById('generate');
 
-        generateRepoButton.addEventListener("click", async () =>{
 
-            try {
-            const response = await fetch('https://api.github.com/repos/Vandal-William/Student/dispatches', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer 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', // Assurez-vous d'avoir les autorisations appropriées
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                event_type: 'create-repo' // Le nom de l'événement défini dans votre workflow
-            }),
-            });
-
-            if (response.ok) {
-                alert('Dépôt créé avec succès !');
-            } else {
-                alert('Erreur lors de la création du dépôt.');
-            }
-            } catch (error) {
-                console.error('Erreur :', error);
-            }
-        })    
     </script>
 </body>
 </html>

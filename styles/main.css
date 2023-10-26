@@ -24,6 +24,7 @@
     width: 100%;
     justify-content: space-between;
     overflow: hidden;
+    position: relative;
 }
 
 .menu{
@@ -137,7 +138,17 @@ p{
     font-display: flex;
 }
 
-  
+#generate{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background: lightblue;
+    border: none;
+    display: none;
+
+}
 
 
   

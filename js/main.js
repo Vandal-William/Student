@@ -4,10 +4,9 @@ import { activeMarked } from "./marked.js";
 import { firebaseData } from "./firbaseData.js";
 
 const home = document.querySelector('#site-title');
-if(home){
-    home.style.cursor = "pointer";
-}
+home.style.cursor = "pointer";
 
+const generateRepoButton = document.getElementById('generate');
 const inputMail = document.querySelector('#user-info');
 const inputPass = document.querySelector('#password');
 const connectButton = document.querySelector('#submit-info');
@@ -51,6 +50,7 @@ submitButton.addEventListener("click", () => {
 });  
 
 home.addEventListener('click', () => {
+    generateRepoButton.style.display = 'none'
     activeMarked('./cours/bienvenu.md');
 })
 

@@ -1,4 +1,7 @@
 import { activeMarked } from "./marked.js";
+import { createRepositoryFromTemplate } from "./createGithubRepo.js";
+
+const generateRepoButton = document.getElementById('generate');
 
 export function createMenuConnect(user, access, languages){
 
@@ -48,7 +51,16 @@ export function createMenuConnect(user, access, languages){
                     });
         
                     contentElement.addEventListener('click', () => {
+                        generateRepoButton.style.display = 'block'
                         activeMarked(l.path)
+                        const path = l.path;
+                        const match = path.match(/_(.*?)\./);
+                       if(match && match[1]){
+                            const repoName = match[1]
+                           generateRepoButton.addEventListener("click", async () => {
+                               createRepositoryFromTemplate(access.token, access.pseudoGit, repoName)
+                           });
+                       } 
                     });
 
                 })
