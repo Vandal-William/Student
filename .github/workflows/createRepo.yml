@@ -1,5 +1,6 @@
 name: Créer un dépôt à partir du modèle
 
+
 on:
   repository_dispatch:
     types: [create-repo]
@@ -10,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout du code
-      uses: actions/checkout@v2.5.0
+      uses: actions/checkout@v3
 
     - name: Configurer GitHub CLI
       env:
