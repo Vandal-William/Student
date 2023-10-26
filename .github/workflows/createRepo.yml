@@ -1,15 +1,25 @@
-name: Créer un dépôt depuis un modèle
+name: Créer un dépôt à partir du modèle
 
 on:
   repository_dispatch:
     types: [create-repo]
 
 jobs:
-  create-repo:
+  create_repo:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Créer un dépôt
+    - name: Checkout du code
+      uses: actions/checkout@v2
+
+    - name: Configurer GitHub CLI
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "Configurer le jeton d'accès GitHub CLI"
+        gh config set -h github.com oauth-token $GH_TOKEN
+
+    - name: Créer le dépôt depuis le modèle
       run: |
         # Placez ici votre commande pour créer un dépôt à partir du modèle
-        gh repo create MonProjet --template=students-com/exemple
+        gh repo create exemple-test --template=students-com/exemple
