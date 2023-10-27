@@ -1,5 +1,5 @@
 export function createRepositoryFromTemplate(token, githubPseudo, template){
-
+    console.log(token + ' - ' + githubPseudo + ' - ' + template)
     const tokenGit = token;
     const pseudo = githubPseudo;
     const orgName = "students-com";
@@ -22,7 +22,12 @@ export function createRepositoryFromTemplate(token, githubPseudo, template){
     })
     .then(response => {
         if (response.status === 201) {
-            console.log(`https://github.com/${pseudo}/${newRepoName}`);
+            const dialog = document.querySelector('#dialog');
+            const url = document.querySelector('#repo-url');
+            url.href = `https://github.com/${pseudo}/${newRepoName}`;
+            url.textContent = `https://github.com/${pseudo}/${newRepoName}`;
+            dialog.style.display = "block";
+           
         } else {
             console.error(`Erreur lors de la création du dépôt : ${response.status} - ${response.statusText}`);
         }

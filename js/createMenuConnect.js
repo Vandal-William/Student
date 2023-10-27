@@ -4,15 +4,14 @@ import { createRepositoryFromTemplate } from "./createGithubRepo.js";
 const generateRepoButton = document.getElementById('generate');
 
 export function createMenuConnect(user, access, languages){
-
     // Sélectionnez le conteneur de l'accordéon
     const accordionContainer = document.querySelector('.menu');
-
+    
     if(user){
         accordionContainer.innerHTML= "";
         // Créez l'accordéon en JavaScript
         languages.forEach((section, index) => {
-
+            
             const lang = access.find(lang => lang.access_lang.includes(section.title) && lang.userId === user);
             const sectionElement = document.createElement('div');
             sectionElement.classList.add('accordion-section');
@@ -58,7 +57,7 @@ export function createMenuConnect(user, access, languages){
                        if(match && match[1]){
                             const repoName = match[1]
                            generateRepoButton.addEventListener("click", async () => {
-                               createRepositoryFromTemplate(access.token, access.pseudoGit, repoName)
+                                createRepositoryFromTemplate(lang.token, lang.pseudoGit, repoName)
                            });
                        } 
                     });

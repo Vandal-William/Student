@@ -14,6 +14,8 @@ const disconnectButton = document.querySelector('#disconect');
 const submitButton = document.querySelector('#submit-info');
 const accordionContainer = document.querySelector('.menu');
 const markdownPreview = document.getElementById("markdownPreview");
+const dialogCloseButton = document.querySelector("#close-button");
+const dialog = document.querySelector('#dialog');
 
 activeMarked('./cours/bienvenu.md');
 
@@ -60,4 +62,8 @@ disconnectButton.addEventListener('click', () => {
     auth.signOut().then(() =>{
         console.log("disconnected !")
     })
+})
+
+dialogCloseButton.addEventListener('click', () => {
+    dialog.style.display = "none"
 })

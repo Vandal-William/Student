@@ -150,5 +150,34 @@ p{
 
 }
 
+#dialog{
+    width: 500px;
+    height: 100px;
+    position: absolute;
+    right: 10px;
+    bottom: 50px;
+    background: #eaeaea;
+    display: none;
+}
+
+
+#close-dialog{
+    padding: 3px;
+    display: flex;
+    justify-content: space-between;
+    background: #000;
+    color: #fff;
+    
+}
+
+#repo-url{
+    font-size: 13px;
+    padding: 10px;
+}
+
+#close-button{
+    color: lightcoral;
+    cursor: pointer;
+}
 
   
