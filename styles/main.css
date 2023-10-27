@@ -17,6 +17,34 @@
     z-index: 1;
 }
 
+#site-title:hover{
+    color: lightcoral;
+}
+
+.nav{
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    align-self: center;
+}
+
+.nav-li{
+    cursor: pointer;
+    color: #fff;
+}
+.nav-li:hover{
+    color: lightcoral;
+}
+
+.nav-a{
+    text-decoration: none;
+    color: #fff;
+    display: none;
+}
+
+.nav-a:hover{
+    color: lightcoral;
+}
 
 .main-content{
     display: flex;

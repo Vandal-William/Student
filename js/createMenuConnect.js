@@ -32,7 +32,6 @@ export function createMenuConnect(user, access, languages){
             
             section.lesson.forEach(l => {
 
-                l.user.forEach(u => {
                     const contentElement = document.createElement('div');
                     contentElement.classList.add('accordion-content');
                     contentElement.style.cursor = "pointer";
@@ -41,7 +40,7 @@ export function createMenuConnect(user, access, languages){
                     contentElement.style.display = "none";
                     contentElement.textContent = l.lesson_title;
 
-                    if(u.isActive && u.name === user){
+                    if(l.user.includes(user)){
                         sectionElement.appendChild(contentElement);
                     }
 
@@ -61,8 +60,6 @@ export function createMenuConnect(user, access, languages){
                            });
                        } 
                     });
-
-                })
             })
     
             accordionContainer.appendChild(sectionElement);

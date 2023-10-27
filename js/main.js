@@ -16,6 +16,9 @@ const accordionContainer = document.querySelector('.menu');
 const markdownPreview = document.getElementById("markdownPreview");
 const dialogCloseButton = document.querySelector("#close-button");
 const dialog = document.querySelector('#dialog');
+const guidesLink = document.querySelector('#guides');
+const programmeLink = document.querySelector('#programme');
+const projectLink = document.querySelector('#projects');
 
 activeMarked('./cours/bienvenu.md');
 
@@ -67,3 +70,22 @@ disconnectButton.addEventListener('click', () => {
 dialogCloseButton.addEventListener('click', () => {
     dialog.style.display = "none"
 })
+
+guidesLink.addEventListener('click', () => {
+    activeMarked('./pages/guides.md');
+})
+
+programmeLink.addEventListener('click', () => {
+    activeMarked('./pages/programme.md');
+})
+
+projectLink.addEventListener('click', () => {
+    activeMarked('./pages/projets.md');
+})
+
+const urlParams = new URLSearchParams(window.location.search);
+const paramValue = urlParams.get("id");
+
+if(paramValue){
+    activeMarked(`./pages/${paramValue}.md`);
+}
