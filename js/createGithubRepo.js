@@ -22,18 +22,30 @@ export function createRepositoryFromTemplate(token, githubPseudo, template){
     })
     .then(response => {
         if (response.status === 201) {
+            const createError = document.querySelector('#error');
+            createError.innerHTML= "";
             const dialog = document.querySelector('#dialog');
             const url = document.querySelector('#repo-url');
-            url.href = `https://github.com/${pseudo}/${newRepoName}`;
-            url.textContent = `https://github.com/${pseudo}/${newRepoName}`;
+            url.href = `https://vscode.dev/github.com/${pseudo}/${newRepoName}`;
+            url.textContent = `https://vscode.dev/github.com/${pseudo}/${newRepoName}`;
             dialog.style.display = "block";
            
         } else {
-            console.error(`Erreur lors de la création du dépôt : ${response.status} - ${response.statusText}`);
+            const dialog = document.querySelector('#dialog');
+            const createError = document.querySelector('#error');
+            createError.innerHTML= "";
+            createError.style.color = "red";
+            createError.textContent = `Erreur lors de la création du dépôt : ${response.status} - ${response.statusText}`;
+            dialog.style.display = "block";
         }
     })
     .catch(error => {
-        console.error(`Erreur lors de la création du dépôt : ${error}`);
+        const dialog = document.querySelector('#dialog');
+        const createError = document.querySelector('#error');
+        createError.innerHTML= "";
+        createError.style.color = "red";
+        createError.textContent = `Erreur lors de la création du dépôt : ${error}`;
+        dialog.style.display = "block";
     });
 }
 
