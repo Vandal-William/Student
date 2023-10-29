@@ -26,8 +26,8 @@ export function createRepositoryFromTemplate(token, githubPseudo, template){
             createError.innerHTML= "";
             const dialog = document.querySelector('#dialog');
             const url = document.querySelector('#repo-url');
-            url.href = `https://vscode.dev/github.com/${pseudo}/${newRepoName}`;
-            url.textContent = `https://vscode.dev/github.com/${pseudo}/${newRepoName}`;
+            url.href = `https://github.com/${pseudo}/${newRepoName}`;
+            url.textContent = `https://github.com/${pseudo}/${newRepoName}`;
             dialog.style.display = "block";
            
         } else {

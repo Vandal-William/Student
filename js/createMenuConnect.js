@@ -2,6 +2,7 @@ import { activeMarked } from "./marked.js";
 import { createRepositoryFromTemplate } from "./createGithubRepo.js";
 
 const generateRepoButton = document.getElementById('generate');
+const adminLinkSettings = document.getElementById('adminLinkSettings')
 
 export function createMenuConnect(user, access, languages){
     // Sélectionnez le conteneur de l'accordéon
@@ -13,6 +14,7 @@ export function createMenuConnect(user, access, languages){
         languages.forEach((section, index) => {
             
             const lang = access.find(lang => lang.access_lang.includes(section.title) && lang.userId === user);
+
             const sectionElement = document.createElement('div');
             sectionElement.classList.add('accordion-section');
     
@@ -24,9 +26,12 @@ export function createMenuConnect(user, access, languages){
             headerElement.style.padding = "10px";
             headerElement.style.borderBottom = "1px solid black";
             headerElement.textContent = section.title;
-
+            
             if(lang){
                 sectionElement.appendChild(headerElement);
+                if (lang.status === "admin"){
+                    adminLinkSettings.style.display = "block"
+                }
             }
          
             

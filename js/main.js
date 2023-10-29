@@ -18,7 +18,7 @@ const dialogCloseButton = document.querySelector("#close-button");
 const dialog = document.querySelector('#dialog');
 const guidesLink = document.querySelector('#guides');
 const programmeLink = document.querySelector('#programme');
-const projectLink = document.querySelector('#projects');
+// const projectLink = document.querySelector('#projects');
 
 activeMarked('./cours/bienvenu.md');
 
@@ -44,8 +44,8 @@ auth.onAuthStateChanged(user =>{
         inputMail.style.display = "inline-block"
         disconnectButton.style.display = "none"
         accordionContainer.style.display = "none"
-        markdownPreview.style.margin = "auto"
-        markdownPreview.style.height = "91vh"
+        markdownPreview.style.width = "100%"
+        markdownPreview.style.height = "95vh"
         markdownPreview.style.overflow = "auto"
     }
 })
@@ -72,16 +72,19 @@ dialogCloseButton.addEventListener('click', () => {
 })
 
 guidesLink.addEventListener('click', () => {
+    generateRepoButton.style.display = 'none'
     activeMarked('./pages/guides.md');
 })
 
 programmeLink.addEventListener('click', () => {
+    generateRepoButton.style.display = 'none'
     activeMarked('./pages/programme.md');
 })
 
-projectLink.addEventListener('click', () => {
-    activeMarked('./pages/projets.md');
-})
+// projectLink.addEventListener('click', () => {
+//     generateRepoButton.style.display = 'none'
+//     activeMarked('./pages/projets.md');
+// })
 
 const urlParams = new URLSearchParams(window.location.search);
 const paramValue = urlParams.get("id");

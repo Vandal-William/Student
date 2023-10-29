@@ -4,6 +4,10 @@
     text-transform: capitalize;
 }
 
+.invisible{
+    display: none;
+}
+
 .header{
     height: 5vh;
     padding: 10px;
@@ -17,7 +21,12 @@
     z-index: 1;
 }
 
-#site-title:hover{
+#title-link{
+    text-decoration: none;
+    color: #fff;
+}
+
+#title-link:hover{
     color: lightcoral;
 }
 
@@ -31,9 +40,12 @@
 .nav-li{
     cursor: pointer;
     color: #fff;
+  
 }
+
 .nav-li:hover{
     color: lightcoral;
+    
 }
 
 .nav-a{
@@ -44,6 +56,10 @@
 
 .nav-a:hover{
     color: lightcoral;
+}
+
+#adminLinkSettings{
+    display: none;
 }
 
 .main-content{
@@ -79,87 +95,8 @@
     border: none;
 }
 
-#consigne{
-    margin: 20px;
-}
-
-#verify-button{
-    margin: 20px;
-}
-
-#result{
-    margin: 20px;
-}
-/* exercice page */
-
-/* Style pour les onglets */
-.tab {
-    overflow: hidden;
-    padding: 20px;
-}
-  
-.tab button {
-    background-color: #f1f1f1;
-    float: left;
-    border: 1px solid #ccc;
-    outline: none;
-    cursor: pointer;
-  }
-  
-  /* Style pour les éditeurs Ace */
-.tabcontent {
-  display: none; 
-}
-
-.tablinks{
-    padding: 10px;
-    margin: 1px;
-}
-
 .lang-title{
     margin: 20px;
-}
-
-#previewEditor{
-    width: 10%;
-    height: 10%;
-    opacity: 0;
-}
-
-#htmlEditor{
-    width: 95%;
-    height: 60vh;
-    margin: 20px;
-    font-size: 16px;
-    z-index: 0;
-}
-
-#cssEditor{
-    width: 95%;
-    height: 60vh;
-    margin: 20px;
-    font-size: 16px;
-    z-index: 0;
-}
-
-#jsEditor{
-    width: 95%;
-    height: 60vh;
-    margin: 20px;
-    font-size: 16px;
-    z-index: 0;
-}
-
-#preview-content{
-    width: 90%;
-    height: 60vh;
-    margin: 20px;
-    font-size: 16px;
-    overflow: auto;
-}
-
-p{
-    margin-top: 10px;
 }
 
 #flex{
@@ -208,4 +145,6 @@ p{
     cursor: pointer;
 }
 
-  
+#show-languages{
+    display: none;
+}
