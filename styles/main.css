@@ -4,6 +4,10 @@
     text-transform: capitalize;
 }
 
+body{
+    background: #eaeaea;
+}
+
 .invisible{
     display: none;
 }
@@ -64,10 +68,8 @@
 
 .main-content{
     display: flex;
-    height: 93vh;
     width: 100%;
     justify-content: space-between;
-    overflow: hidden;
     position: relative;
 }
 
@@ -147,4 +149,11 @@
 
 #show-languages{
     display: none;
+}
+
+#markdownPreview{
+    width: 70%;
+    margin: auto;
+    background-color: #fff;
+    overflow-y:scroll;
 }

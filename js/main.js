@@ -44,9 +44,6 @@ auth.onAuthStateChanged(user =>{
         inputMail.style.display = "inline-block"
         disconnectButton.style.display = "none"
         accordionContainer.style.display = "none"
-        markdownPreview.style.width = "100%"
-        markdownPreview.style.height = "95vh"
-        markdownPreview.style.overflow = "auto"
     }
 })
 

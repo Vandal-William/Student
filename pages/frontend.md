@@ -3,7 +3,8 @@
 
 # Programme Front-end 2023
 
-Le bloque front-end est composé de trois modules : HTML, CSS et JavaScript, qui gravitent autour d'un projet principal, la création d'un site web. La conclusion de chaque module se manifeste par l'avancement de ce projet. À la suite de chaque atelier, une série d'exercices est proposée à l'apprenant pour lui permettre de s'exercer et d'approfondir les notions vues pendant l'atelier.
+Le bloque front-end est composé de trois modules : HTML, CSS et JavaScript, qui gravitent autour d'un projet principal, la création d'un site web. La conclusion de chaque module se manifeste par l'avancement de ce projet. À la suite de chaque atelier, une série d'exercices est proposée à l'apprenant pour lui permettre de s'exercer et d'approfondir les notions vues pendant l'atelier.<br>
+<strong>Au total 25 ateliers(25h - 1h par semaine) sur une durée de 5 mois</strong>
 
 <h2 style="color:darkorange;">HTML</h2>
 
