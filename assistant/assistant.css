@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.scene{
+    display: flex;
+    width: 100%;
+}
+
+.interact{
+    width: 50%;
+    height: 100vh;
+  
+}
+
+.character{
+    width: 50%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.elina{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Utilisez "cover" pour conserver les proportions et couvrir toute la div sans déformation */
+    object-position: center center;  
+}
