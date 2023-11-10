@@ -4,25 +4,96 @@ let isEating = false
 let isSleeping = false
 let isFooting = false
 let isWorkHour = false
-// Fonction pour mettre à jour l'image en fonction de l'heure
+let isThinkink = false
+
+
 function updateImage() {
-  // Obtenez la date actuelle
-  const now = new Date();
 
-  // Obtenez l'heure actuelle (heures et minutes)
-  const currentHour = now.getHours();
-  const currentMinute = now.getMinutes();
+    const now = new Date();
+    const dayOfWeek = new Date();
 
-  // Vérifiez si l'heure actuelle est entre 19h00 (19:00) et 20h00 (20:00)
+    var day = dayOfWeek.getDay();
+
+    var week = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    var nameOfDay = week[day];
+
+    // Obtenez l'heure actuelle (heures et minutes)
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    // Vérifiez si l'heure actuelle est entre 19h00 (19:00) et 20h00 (20:00)
     if (
         currentHour === 19 && currentMinute >= 0 && currentMinute < 60 && isEating === false ||
-        currentHour === 12 && currentMinute >= 0 && currentMinute < 60 && isEating === false
-    ) {
-        gif.src = './gif/Elina/actions/eating.gif';
-        isEating = true;
-        isSleeping = false;
-        isFooting = false;
-        isWorkHour = false;
+        currentHour === 12 && currentMinute >= 0 && currentMinute < 60 && isEating === false ||
+        currentHour === 8 && currentMinute >= 0 && currentMinute < 60 && isEating === false
+    ) { 
+        if(currentHour === 8 && currentMinute >= 0 && currentMinute < 60 && isEating === false){
+
+            gif.src = './gif/Elina/actions/morning_eating.gif';
+            isEating = true;
+            isSleeping = false;
+            isFooting = false;
+            isWorkHour = false;
+
+        }else if (currentHour === 19 && currentMinute >= 0 && currentMinute < 60 && isEating === false || currentHour === 12 && currentMinute >= 0 && currentMinute < 60 && isEating === false ){
+
+            if(nameOfDay === 'Lundi'){
+
+                gif.src = './gif/Elina/actions/monday_eating.gif';
+                isEating = true;
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
+
+            }else if (nameOfDay === 'Mardi'){
+
+                gif.src = './gif/Elina/actions/eating.gif';
+                isEating = true;
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
+
+            }else if (nameOfDay === 'Mercredi'){
+
+                gif.src = './gif/Elina/actions/wednesday_eating.gif';
+                isEating = true;
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
+            }else if (nameOfDay === 'Jeudi'){
+
+                gif.src = './gif/Elina/actions/thursday_eating.gif';
+                isEating = true;
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
+
+            }else if (nameOfDay === 'Vendredi'){
+
+                gif.src = './gif/Elina/actions/friday_eating.gif';
+                isEating = true;
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
+
+            }else if (nameOfDay === 'Samedi'){
+
+                gif.src = './gif/Elina/actions/saturday_eating.gif';
+                isEating = true;
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
+
+            }else if (nameOfDay === 'Dimanche'){
+
+                gif.src = './gif/Elina/actions/sunday_eating.gif';
+                isEating = true;
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
+            }
+
+        }
 
     }else if (
 
@@ -37,7 +108,7 @@ function updateImage() {
         isFooting = false;
         isWorkHour = false;
 
-    }else if (currentHour >= 7 && currentHour < 9 && isFooting === false) {
+    }else if (currentHour >= 7 && currentHour < 8 && isFooting === false) {
         // Faites quelque chose ici
         gif.src = './gif/Elina/actions/footing.gif';
         isFooting = true;
@@ -48,7 +119,21 @@ function updateImage() {
     }else{
         
         if(currentHour >= 9 && currentHour < 12 && isWorkHour === false || currentHour >= 13 && currentHour < 17 && isWorkHour === false){
+
             gif.src = './gif/Elina/Elina.gif';
+            isWorkHour = true;
+            isFooting = false;
+            isEating = false;
+            isSleeping = false;
+            isThinkink = false;
+
+        }
+        
+        else if(currentHour === 11 && currentMinute >= 40 && currentMinute < 45 && isThinkink === false){
+
+            gif.src = './gif/Elina/actions/thinking.gif';
+
+            isThinkink = true;
             isWorkHour = true;
             isFooting = false;
             isEating = false;
