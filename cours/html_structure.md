@@ -1,3 +1,5 @@
+<div style="overflow:auto">
+
 # La structure d'une page web
 
 ## Qu'est ce que le HTML
@@ -96,3 +98,11 @@ Exemple :
 
 ```
 ## Execice
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>

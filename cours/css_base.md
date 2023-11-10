@@ -1,3 +1,5 @@
+<div style="overflow:auto">
+
 # Qu'est ce que le css ?
 
 Le CSS, ou Cascading Style Sheets (Feuilles de style en cascade), est un langage de programmation utilisé pour définir la présentation, la mise en page et l'apparence visuelle des pages web. 
@@ -226,3 +228,11 @@ Cette catégorie concerne les styles de texte, tels que la taille de police, la 
 ```
 
 ## Liste d'exercices
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>

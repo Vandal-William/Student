@@ -1,3 +1,5 @@
+<div style="overflow:auto">
+
 # Les tableaux
 
 En HTML, un tableau est utilisé pour organiser et afficher des données dans une structure à deux dimensions composée de lignes et de colonnes. Pour créer un tableau, vous utilisez des balises HTML spécifiques.
@@ -139,3 +141,11 @@ Les tableaux HTML peuvent également être enrichis avec d'autres balises pour c
 </table>
 
 # Exercice 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>

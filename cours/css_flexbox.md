@@ -1,3 +1,5 @@
+<div style="overflow:auto">
+
 # Flexbox(modèle de boîte flexible)
 
 Les flexbox, sont une technique de mise en page en CSS qui permet de créer des mises en page complexes et réactives en alignant et en répartissant des éléments de manière dynamique à l'intérieur d'un conteneur.
@@ -110,3 +112,11 @@ Les flexbox, sont une technique de mise en page en CSS qui permet de créer des 
 <img src="./cours\Ressources\flexbox/gap-1.svg" alt="gap" width="600" height="500">
 
 ## Liste d'exercices
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>

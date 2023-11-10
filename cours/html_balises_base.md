@@ -1,3 +1,5 @@
+<div style="overflow:auto">
+
 # Les balises de contenus
 
 Il existe de nombreuses autres balises HTML pour différents types de contenu :
@@ -54,3 +56,11 @@ Exemple :
 <p> je suis <span> un span </span> dans un paragraphe</p>
 ```
 ## Liste d'exercices
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>

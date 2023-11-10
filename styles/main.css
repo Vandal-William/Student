@@ -1,11 +1,11 @@
 *{
     padding: 0;
     margin: 0;
-    text-transform: capitalize;
 }
 
 body{
     background: #eaeaea;
+    overflow: hidden;
 }
 
 .invisible{
@@ -73,7 +73,7 @@ body{
 }
 
 .menu{
-    min-height: 100vh;
+    height: 100vh;
     width: 30%;
     overflow: auto;
     background-color: #eaeaea;
@@ -107,8 +107,9 @@ body{
 #generate{
     position: absolute;
     right: 10px;
-    bottom: 10px;
+    bottom: 120px;
     padding: 10px;
+    z-index: 1;
     cursor: pointer;
     background: lightblue;
     border: none;
@@ -121,7 +122,7 @@ body{
     height: 100px;
     position: absolute;
     right: 10px;
-    bottom: 50px;
+    bottom: 70px;
     background: #eaeaea;
     display: none;
 }
@@ -152,6 +153,7 @@ body{
 
 #markdownPreview{
     width: 70%;
+    height: 100vh;
     margin: auto;
     background-color: #fff;
     overflow-y:scroll;

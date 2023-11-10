@@ -1,3 +1,5 @@
+<div style="overflow:auto">
+
 # Les Formulaire en HTML
 
 Un formulaire en HTML est un élément essentiel permettant aux utilisateurs de saisir des données et de les envoyer au serveur web pour traitement. Les formulaires sont couramment utilisés pour recueillir des informations, comme des informations de contact, des commentaires, des identifiants et des mots de passe, et bien plus encore
@@ -288,3 +290,11 @@ Un formulaire en HTML est un élément essentiel permettant aux utilisateurs de 
 ``accept`` : Pour les champs de type "file", spécifie les types de fichiers acceptés pour l'envoi.
 
 ## Liste d'exercices
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>
