@@ -5,10 +5,9 @@ let isSleeping = false
 let isFooting = false
 let isWorkHour = false
 let isThinkink = false
-let isDrinkTime = false
 
-function updateImage() {
 
+export function characterLifeCycle() {
 
     const now = new Date();
     const dayOfWeek = new Date();
@@ -32,7 +31,9 @@ function updateImage() {
 
             gif.src = './gif/Elina/actions/morning_eating.gif';
             isEating = true;
-    
+            isSleeping = false;
+            isFooting = false;
+            isWorkHour = false;
 
         }else if (currentHour === 19 && currentMinute >= 0 && currentMinute < 60 && isEating === false || currentHour === 12 && currentMinute >= 0 && currentMinute < 60 && isEating === false ){
 
@@ -40,42 +41,56 @@ function updateImage() {
 
                 gif.src = './gif/Elina/actions/monday_eating.gif';
                 isEating = true;
-          
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
 
             }else if (nameOfDay === 'Mardi'){
 
                 gif.src = './gif/Elina/actions/eating.gif';
                 isEating = true;
-              
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
 
             }else if (nameOfDay === 'Mercredi'){
 
                 gif.src = './gif/Elina/actions/wednesday_eating.gif';
                 isEating = true;
-               
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
             }else if (nameOfDay === 'Jeudi'){
 
                 gif.src = './gif/Elina/actions/thursday_eating.gif';
                 isEating = true;
-                
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
 
             }else if (nameOfDay === 'Vendredi'){
 
                 gif.src = './gif/Elina/actions/friday_eating.gif';
                 isEating = true;
-              
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
 
             }else if (nameOfDay === 'Samedi'){
 
                 gif.src = './gif/Elina/actions/saturday_eating.gif';
                 isEating = true;
-               
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
 
             }else if (nameOfDay === 'Dimanche'){
 
                 gif.src = './gif/Elina/actions/sunday_eating.gif';
                 isEating = true;
-            
+                isSleeping = false;
+                isFooting = false;
+                isWorkHour = false;
             }
 
         }
@@ -89,108 +104,40 @@ function updateImage() {
         // Faites quelque chose ici
         gif.src = './gif/Elina/actions/sleeping.gif';
         isSleeping = true;
+        isEating = false;
+        isFooting = false;
+        isWorkHour = false;
 
     }else if (currentHour >= 7 && currentHour < 8 && isFooting === false) {
         // Faites quelque chose ici
         gif.src = './gif/Elina/actions/footing.gif';
         isFooting = true;
+        isEating = false;
+        isSleeping = false;
+        isWorkHour = false;
 
-    }else{
+    }else if(currentHour >= 9 && currentHour < 12 && isWorkHour === false || currentHour >= 13 && currentHour < 17 && isWorkHour === false){
 
-        if(nameOfDay != "Samedi" && nameOfDay != "Dimanche"){
+            gif.src = './gif/Elina/Elina.gif';
+            isWorkHour = true;
+            isFooting = false;
+            isEating = false;
+            isSleeping = false;
+            isThinkink = false;
 
-
-            if(
-                currentHour === 9 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                currentHour === 10 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                currentHour === 11 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                currentHour === 13 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                currentHour === 14 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                currentHour === 15 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                currentHour === 16 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                currentHour === 9 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                currentHour === 10 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                currentHour === 11 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                currentHour === 13 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                currentHour === 14 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                currentHour === 15 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                currentHour === 17 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false 
-                
-                ){
-    
-                gif.src = './gif/Elina/actions/thinking.gif';
-                isThinkink = true;
-               
-                if(currentMinute >= 15 && currentMinute < 20 || currentMinute >= 45 && currentMinute < 50 ){
-                    isWorkHour = true;
-                }else{
-                    isWorkHour = false;
-                }
-
-    
-            }
-            
-            else if(
-    
-                currentHour === 10 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                currentHour === 11 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                currentHour === 13 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                currentHour === 14 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                currentHour === 15 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                currentHour === 16 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false
-    
-                ){
-    
-                gif.src = './gif/Elina/actions/drink_water.gif';
-                isDrinkTime = true
-
-                if(currentMinute >= 30 && currentMinute < 35){
-                    isWorkHour = true;
-                }else{
-                    isWorkHour = false;
-                }
-              
-
-            }
-
-            else{
-                if (
-                    !(currentHour === 9 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                        currentHour === 10 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                        currentHour === 11 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                        currentHour === 13 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                        currentHour === 14 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                        currentHour === 15 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                        currentHour === 16 && currentMinute >= 15 && currentMinute < 20 && isThinkink === false ||
-                        currentHour === 9 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                        currentHour === 10 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                        currentHour === 11 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                        currentHour === 13 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                        currentHour === 14 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                        currentHour === 15 && currentMinute >= 45 && currentMinute < 50 && isThinkink === false ||
-                        currentHour === 17 && currentMinute >= 12 && currentMinute < 13 && isThinkink === false) &&
-                      !(currentHour === 10 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                        currentHour === 11 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                        currentHour === 13 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                        currentHour === 14 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false ||
-                        currentHour === 15 && currentMinute >= 30 && currentMinute < 35 && isDrinkTime === false)   
-
-                ){
-                
-                    if(isWorkHour === false){
-                        gif.src = './gif/Elina/Elina.gif';
-                        isWorkHour = true
-                        isDrinkTime = false
-                        isThinkink = false;
-
-                    }
-                }
-            }
-            
-        }
         
-     
     }
 }
 
-setInterval(updateImage, 1000) ; // Mise à jour toutes les 1000 millisecondes (1 seconde)
+characterLifeCycle()
+
+const intervalID = setInterval(characterLifeCycle, 300000); // 5 minutes
+sessionStorage.setItem('intervalID', intervalID.toString());
+
+// const storedIntervalID = parseInt(sessionStorage.getItem('intervalID'), 10); => pour récupérer l'id de l'interval depuis le storage
+
+export function stopCharacterLifeCycle(ID) {
+    clearInterval(ID);
+}
+
+
