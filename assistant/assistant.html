@@ -9,7 +9,30 @@
 <body>
 	<div class="scene">
 		<div class="interact">
-			<a href="../index.html">Revenir sur students</a>
+			<div class="action-menu">
+				<ul class="menu">
+					<li><a class="students-link" href="../index.html">Students</a></li>
+					<li class="doc">Docs</li>
+					<li class="assist">@assistFlow</li>
+					<li class="review">@review</li>
+					<li class="calendar">@calendar</li>
+				</ul>
+			</div>
+			<div class="div-info home">
+				<h2 class="section-title">Bienvenu sur Assistant</h2>
+			</div>
+			<div class="div-info results-docs">
+				<h2 class="section-title">Documentations</h2>
+			</div>
+			<div class="div-info results-assistFlow">
+				<h2 class="section-title">@assistFlow</h2>
+			</div>
+			<div class="div-info results-review">
+				<h2 class="section-title">@review</h2>
+			</div>
+			<div class="div-info results-calendar">
+				<h2 class="section-title">@calendar</h2>
+			</div>
 		</div>
 		<div class="assistant">
 			<div class="character">
@@ -17,18 +40,24 @@
 			</div>
 			<div class="chat_interface">
 				<div class="emot_buttons">
-					<h2 class="chat_title">Menu</h2>
+					<h2 class="chat_title">Parlez avec Elina</h2>
 				</div>
 				<div class="chat">
 					<div class="chat_history"></div>
-					<div class="interact_interface">
-						<input class="input_chat" type="text">
+					<form  class="interact_interface">
+						<select class="selectTarget" name="target">
+							<option value="@any">@any</option>
+							<option value="@assistFlow">@assistFlow</option>
+							<option value="@assistFlow">@review</option>
+							<option value="@assistFlow">@calendar</option>
+						</select>
+						<input class="input_chat" type="text" name="message">
 						<button class="submit_chat">Envoyer</button>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="module" src="./assistant.js"></script>
+	<script type="module" src="./js/main.js"></script>
 </body>
 </html>

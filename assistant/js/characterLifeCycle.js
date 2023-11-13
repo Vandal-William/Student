@@ -3,8 +3,8 @@ const gif = document.querySelector(".elina");
 let isEating = false
 let isSleeping = false
 let isFooting = false
-let isWorkHour = false
-let isThinkink = false
+
+
 
 
 export function characterLifeCycle() {
@@ -14,7 +14,16 @@ export function characterLifeCycle() {
 
     var day = dayOfWeek.getDay();
 
-    var week = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    var week = [
+        'Dimanche', 
+        'Lundi', 
+        'Mardi', 
+        'Mercredi', 
+        'Jeudi', 
+        'Vendredi', 
+        'Samedi'
+    ];
+
     var nameOfDay = week[day];
 
     // Obtenez l'heure actuelle (heures et minutes)
@@ -23,27 +32,52 @@ export function characterLifeCycle() {
 
     // Vérifiez si l'heure actuelle est entre 19h00 (19:00) et 20h00 (20:00)
     if (
-        currentHour === 19 && currentMinute >= 0 && currentMinute < 60 && isEating === false ||
-        currentHour === 12 && currentMinute >= 0 && currentMinute < 60 && isEating === false ||
-        currentHour === 8 && currentMinute >= 0 && currentMinute < 60 && isEating === false
+        currentHour === 19 && 
+        currentMinute >= 0 && 
+        currentMinute < 60 && 
+        isEating === false ||
+        currentHour === 12 && 
+        currentMinute >= 0 && 
+        currentMinute < 60 && 
+        isEating === false ||
+        currentHour === 8  && 
+        currentMinute >= 0 && 
+        currentMinute < 60 && 
+        isEating === false
     ) { 
-        if(currentHour === 8 && currentMinute >= 0 && currentMinute < 60 && isEating === false){
+        if(
+            currentHour === 8 && 
+            currentMinute >= 0 && 
+            currentMinute < 60 && 
+            isEating === false
+            
+            ){
 
             gif.src = './gif/Elina/actions/morning_eating.gif';
             isEating = true;
             isSleeping = false;
             isFooting = false;
-            isWorkHour = false;
 
-        }else if (currentHour === 19 && currentMinute >= 0 && currentMinute < 60 && isEating === false || currentHour === 12 && currentMinute >= 0 && currentMinute < 60 && isEating === false ){
-
+        }else if (
+          
+            currentHour === 19 && 
+            currentMinute >= 0 && 
+            currentMinute < 60 && 
+            isEating === false || 
+            currentHour === 12 && 
+            currentMinute >= 0 && 
+            currentMinute < 60 && 
+            isEating === false 
+            
+            ){
+               
             if(nameOfDay === 'Lundi'){
-
+              
                 gif.src = './gif/Elina/actions/monday_eating.gif';
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
-                isWorkHour = false;
+
 
             }else if (nameOfDay === 'Mardi'){
 
@@ -51,7 +85,7 @@ export function characterLifeCycle() {
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
-                isWorkHour = false;
+
 
             }else if (nameOfDay === 'Mercredi'){
 
@@ -59,14 +93,14 @@ export function characterLifeCycle() {
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
-                isWorkHour = false;
+
             }else if (nameOfDay === 'Jeudi'){
 
                 gif.src = './gif/Elina/actions/thursday_eating.gif';
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
-                isWorkHour = false;
+
 
             }else if (nameOfDay === 'Vendredi'){
 
@@ -74,7 +108,7 @@ export function characterLifeCycle() {
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
-                isWorkHour = false;
+
 
             }else if (nameOfDay === 'Samedi'){
 
@@ -82,7 +116,7 @@ export function characterLifeCycle() {
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
-                isWorkHour = false;
+
 
             }else if (nameOfDay === 'Dimanche'){
 
@@ -90,15 +124,19 @@ export function characterLifeCycle() {
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
-                isWorkHour = false;
+
             }
 
         }
 
     }else if (
 
-        currentHour >= 20 && currentHour < 24 && isSleeping === false || 
-        currentHour >= 0 && currentHour < 7 && isSleeping === false
+        currentHour >= 20 && 
+        currentHour < 24 && 
+        isSleeping === false || 
+        currentHour >= 0 && 
+        currentHour < 7 && 
+        isSleeping === false
 
     ) {
         // Faites quelque chose ici
@@ -106,7 +144,7 @@ export function characterLifeCycle() {
         isSleeping = true;
         isEating = false;
         isFooting = false;
-        isWorkHour = false;
+
 
     }else if (currentHour >= 7 && currentHour < 8 && isFooting === false) {
         // Faites quelque chose ici
@@ -114,29 +152,27 @@ export function characterLifeCycle() {
         isFooting = true;
         isEating = false;
         isSleeping = false;
-        isWorkHour = false;
 
-    }else if(currentHour >= 9 && currentHour < 12 && isWorkHour === false || currentHour >= 13 && currentHour < 17 && isWorkHour === false){
 
-            gif.src = './gif/Elina/Elina.gif';
-            isWorkHour = true;
-            isFooting = false;
-            isEating = false;
-            isSleeping = false;
-            isThinkink = false;
-
-        
+    }else if(currentHour >= 9 && currentHour < 12  || currentHour >= 13 && currentHour < 19 ){
+        const workActivities = [
+            "./gif/Elina/Elina.gif",
+            './gif/Elina/actions/workInPc.gif',
+            './gif/Elina/actions/drawing.gif',
+            './gif/Elina/actions/writing.gif',
+            './gif/Elina/actions/reading.gif',
+            './gif/Elina/actions/workAndPhone.gif'
+        ];
+        const activity = Math.floor(Math.random() * workActivities.length);
+        console.log(activity)
+        gif.src = workActivities[activity];
+        isFooting = false;
+        isEating = false;
+        isSleeping = false;   
     }
 }
 
-characterLifeCycle()
-
-const intervalID = setInterval(characterLifeCycle, 300000); // 5 minutes
-sessionStorage.setItem('intervalID', intervalID.toString());
-
-// const storedIntervalID = parseInt(sessionStorage.getItem('intervalID'), 10); => pour récupérer l'id de l'interval depuis le storage
-
-export function stopCharacterLifeCycle(ID) {
+export function stopLifeCycle(ID) {
     clearInterval(ID);
 }
 

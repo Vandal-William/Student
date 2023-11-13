@@ -7,6 +7,7 @@ const adminLinkSettings = document.getElementById('adminLinkSettings')
 export function createMenuConnect(user, access, languages){
     // Sélectionnez le conteneur de l'accordéon
     const accordionContainer = document.querySelector('.menu');
+    sessionStorage.setItem('userId', user);
     
     if(user){
         accordionContainer.innerHTML= "";
@@ -14,7 +15,7 @@ export function createMenuConnect(user, access, languages){
         languages.forEach((section, index) => {
             
             const lang = access.find(lang => lang.access_lang.includes(section.title) && lang.userId === user);
-
+            sessionStorage.setItem('pseudo', lang.pseudoGit);
             const sectionElement = document.createElement('div');
             sectionElement.classList.add('accordion-section');
     
@@ -34,9 +35,8 @@ export function createMenuConnect(user, access, languages){
                 }
             }
          
-            
+            // sessionStorage.setItem('languages', []);
             section.lesson.forEach(l => {
-
                     const contentElement = document.createElement('div');
                     contentElement.classList.add('accordion-content');
                     contentElement.style.cursor = "pointer";

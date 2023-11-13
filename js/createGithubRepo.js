@@ -4,7 +4,7 @@ export function createRepositoryFromTemplate(token, githubPseudo, template){
     const pseudo = githubPseudo;
     const orgName = "students-com";
     const templateName = template;
-    const newRepoName = `${templateName}-${pseudo}`;
+    const newRepoName = `${templateName}`;
 
     // Utilisez cette URL pour créer un dépôt à partir d'un modèle d'organisation
     const apiUrl = `https://api.github.com/repos/${orgName}/${templateName}/generate`;

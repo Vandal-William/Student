@@ -18,17 +18,18 @@ const dialogCloseButton = document.querySelector("#close-button");
 const dialog = document.querySelector('#dialog');
 const guidesLink = document.querySelector('#guides');
 const programmeLink = document.querySelector('#programme');
-// const projectLink = document.querySelector('#projects');
+const assistantLink = document.querySelector('.assistant-link');
 
 activeMarked('./cours/bienvenu.md');
 
 auth.onAuthStateChanged(user =>{
     if(user){
-        connectButton.style.display = "none"
-        inputPass.style.display = "none"
-        inputMail.style.display = "none"
-        disconnectButton.style.display = "block"
-        accordionContainer.style.display = "block"
+        connectButton.style.display = "none";
+        inputPass.style.display = "none";
+        inputMail.style.display = "none";
+        disconnectButton.style.display = "block";
+        accordionContainer.style.display = "block";
+        assistantLink.style.display = "block";
 
         db.collection('access').get().then(snap => {
             const access = firebaseData(snap.docs);

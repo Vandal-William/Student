@@ -106,8 +106,8 @@ body{
 
 #generate{
     position: absolute;
-    right: 10px;
-    bottom: 120px;
+    right: 1%;
+    bottom: 10%;
     padding: 10px;
     z-index: 1;
     cursor: pointer;
@@ -157,4 +157,8 @@ body{
     margin: auto;
     background-color: #fff;
     overflow-y:scroll;
+}
+
+.assistant-link{
+    display: none;
 }
