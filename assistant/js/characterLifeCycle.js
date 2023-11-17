@@ -1,11 +1,9 @@
-const gif = document.querySelector(".elina");
+const gif = document.querySelector(".assistant");
+// const submit_button = document.querySelector('.submit_chat');
 
 let isEating = false
 let isSleeping = false
 let isFooting = false
-
-
-
 
 export function characterLifeCycle() {
 
@@ -45,15 +43,15 @@ export function characterLifeCycle() {
         currentMinute < 60 && 
         isEating === false
     ) { 
+        // submit_button.setAttribute('disabled', true);
         if(
-            currentHour === 8 && 
-            currentMinute >= 0 && 
-            currentMinute < 60 && 
-            isEating === false
+            currentHour === 8 && currentMinute >= 0 && currentMinute < 60 && isEating === false
             
             ){
 
-            gif.src = './gif/Elina/actions/morning_eating.gif';
+            gif.style.background = 'url(./gif/Elina/actions/morning_eating.gif) no-repeat';
+            gif.style.backgroundSize = "cover";
+            gif.style.backgroundPosition = "center";
             isEating = true;
             isSleeping = false;
             isFooting = false;
@@ -69,11 +67,14 @@ export function characterLifeCycle() {
             currentMinute < 60 && 
             isEating === false 
             
-            ){
-               
+        ){
+            // submit_button.setAttribute('disabled', true);
+
             if(nameOfDay === 'Lundi'){
               
-                gif.src = './gif/Elina/actions/monday_eating.gif';
+                gif.style.background = 'url(./gif/Elina/actions/monday_eating.gif) no-repeat';
+                gif.style.backgroundSize = "cover"
+                gif.style.backgroundPosition = "center";
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
@@ -81,7 +82,9 @@ export function characterLifeCycle() {
 
             }else if (nameOfDay === 'Mardi'){
 
-                gif.src = './gif/Elina/actions/eating.gif';
+                gif.style.background = 'url(./gif/Elina/actions/eating.gif) no-repeat';
+                gif.style.backgroundSize = "cover"
+                gif.style.backgroundPosition = "center";
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
@@ -89,14 +92,18 @@ export function characterLifeCycle() {
 
             }else if (nameOfDay === 'Mercredi'){
 
-                gif.src = './gif/Elina/actions/wednesday_eating.gif';
+                gif.style.background = 'url(./gif/Elina/actions/wednesday_eating.gif) no-repeat';
+                gif.style.backgroundSize = "cover"
+                gif.style.backgroundPosition = "center";
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
 
             }else if (nameOfDay === 'Jeudi'){
 
-                gif.src = './gif/Elina/actions/thursday_eating.gif';
+                gif.style.background = 'url(./gif/Elina/actions/thursday_eating.gif) no-repeat';
+                gif.style.backgroundSize = "cover"
+                gif.style.backgroundPosition = "center";
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
@@ -104,7 +111,9 @@ export function characterLifeCycle() {
 
             }else if (nameOfDay === 'Vendredi'){
 
-                gif.src = './gif/Elina/actions/friday_eating.gif';
+                gif.style.background = 'url(./gif/Elina/actions/friday_eating.gif) no-repeat';
+                gif.style.backgroundSize = "cover"
+                gif.style.backgroundPosition = "center";
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
@@ -112,7 +121,9 @@ export function characterLifeCycle() {
 
             }else if (nameOfDay === 'Samedi'){
 
-                gif.src = './gif/Elina/actions/saturday_eating.gif';
+                gif.style.background = 'url(./gif/Elina/actions/saturday_eating.gif) no-repeat';
+                gif.style.backgroundSize = "cover"
+                gif.style.backgroundPosition = "center";
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
@@ -120,7 +131,9 @@ export function characterLifeCycle() {
 
             }else if (nameOfDay === 'Dimanche'){
 
-                gif.src = './gif/Elina/actions/sunday_eating.gif';
+                gif.style.background = 'url(./gif/Elina/actions/sunday_eating.gif) no-repeat';
+                gif.style.backgroundSize = "cover"
+                gif.style.backgroundPosition = "center";
                 isEating = true;
                 isSleeping = false;
                 isFooting = false;
@@ -139,33 +152,45 @@ export function characterLifeCycle() {
         isSleeping === false
 
     ) {
-        // Faites quelque chose ici
-        gif.src = './gif/Elina/actions/sleeping.gif';
+        // submit_button.setAttribute('disabled', true);
+
+        gif.style.background = 'url(./gif/Elina/actions/sleeping.gif) no-repeat';
+        gif.style.backgroundSize = "cover"
+        gif.style.backgroundPosition = "center";
         isSleeping = true;
         isEating = false;
         isFooting = false;
 
 
     }else if (currentHour >= 7 && currentHour < 8 && isFooting === false) {
-        // Faites quelque chose ici
-        gif.src = './gif/Elina/actions/footing.gif';
+
+        // submit_button.setAttribute('disabled', true);
+
+        gif.style.background = 'url(./gif/Elina/actions/footing.gif) no-repeat';
+        gif.style.backgroundSize = "cover"
+        gif.style.backgroundPosition = "center";
         isFooting = true;
         isEating = false;
         isSleeping = false;
 
 
     }else if(currentHour >= 9 && currentHour < 12  || currentHour >= 13 && currentHour < 19 ){
+
+        // submit_button.removeAttribute('disabled');
+
         const workActivities = [
-            "./gif/Elina/Elina.gif",
-            './gif/Elina/actions/workInPc.gif',
-            './gif/Elina/actions/drawing.gif',
-            './gif/Elina/actions/writing.gif',
-            './gif/Elina/actions/reading.gif',
-            './gif/Elina/actions/workAndPhone.gif'
+            "url(./gif/Elina/Elina.gif) no-repeat",
+            'url(./gif/Elina/actions/workInPc.gif) no-repeat',
+            'url(./gif/Elina/actions/drawing.gif) no-repeat ',
+            'url(./gif/Elina/actions/writing.gif) no-repeat ',
+            'url(./gif/Elina/actions/reading.gif) no-repeat ',
+            'url(./gif/Elina/actions/workAndPhone.gif no-repeat)'
         ];
         const activity = Math.floor(Math.random() * workActivities.length);
         console.log(activity)
-        gif.src = workActivities[activity];
+        gif.style.background = workActivities[activity];
+        gif.style.backgroundSize = "cover"
+        gif.style.backgroundPosition = "center";
         isFooting = false;
         isEating = false;
         isSleeping = false;   

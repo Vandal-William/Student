@@ -1,63 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Elina</title>
-	<link rel="stylesheet" href="./assistant.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assistant.css">
 </head>
 <body>
-	<div class="scene">
-		<div class="interact">
-			<div class="action-menu">
-				<ul class="menu">
-					<li><a class="students-link" href="../index.html">Students</a></li>
-					<li class="doc">Docs</li>
-					<li class="assist">@assistFlow</li>
-					<li class="review">@review</li>
-					<li class="calendar">@calendar</li>
-				</ul>
-			</div>
-			<div class="div-info home">
-				<h2 class="section-title">Bienvenu sur Assistant</h2>
-			</div>
-			<div class="div-info results-docs">
-				<h2 class="section-title">Documentations</h2>
-			</div>
-			<div class="div-info results-assistFlow">
-				<h2 class="section-title">@assistFlow</h2>
-			</div>
-			<div class="div-info results-review">
-				<h2 class="section-title">@review</h2>
-			</div>
-			<div class="div-info results-calendar">
-				<h2 class="section-title">@calendar</h2>
-			</div>
-		</div>
-		<div class="assistant">
-			<div class="character">
-				<img class="elina" src="" alt="">
-			</div>
-			<div class="chat_interface">
-				<div class="emot_buttons">
-					<h2 class="chat_title">Parlez avec Elina</h2>
-				</div>
-				<div class="chat">
-					<div class="chat_history"></div>
-					<form  class="interact_interface">
-						<select class="selectTarget" name="target">
-							<option value="@any">@any</option>
-							<option value="@assistFlow">@assistFlow</option>
-							<option value="@assistFlow">@review</option>
-							<option value="@assistFlow">@calendar</option>
-						</select>
-						<input class="input_chat" type="text" name="message">
-						<button class="submit_chat">Envoyer</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script type="module" src="./js/main.js"></script>
+    <div class="scene">
+        <div class="assistant">
+            <div class="radmenu"><a class="show">Outils</a>
+                <ul>
+                  <li id="tchat" class="nav-li"><a><img title="Tchat" src="./logo/chat-round-line-svgrepo-com.svg" alt=""></a></li>
+                  <li id="review" class="nav-li"><a><img src="./logo/review-file-svgrepo-com.svg" alt=""></a></li>
+                  <li id="stack-overflow" class="nav-li"><a><img src="./logo/stackoverflow-color-svgrepo-com.svg" alt=""></a></li>
+                  <li id="task" class=" nav-li"><a><img src="./logo/task-svgrepo-com.svg" alt=""></a></li>
+                  <li id="Indisponible" class="tchat nav-li"><a>Indisponible</a></li>
+                  <li id="Indisponible" class="tchat nav-li"><a>Indisponible</a></li>
+                </ul>
+            </div>
+
+            <div class="chat">
+                <div class="chat-title">
+                  <h1 class="assistant-name">élina</h1>
+                  <h2 class="statut">En ligne</h2>
+                  <figure class="avatar">
+                    <img class="avatar-img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
+                </div>
+                <div class="messages">
+                  <div class="messages-content"></div>
+                </div>
+                <form class="message-box">
+                  <textarea type="text" class="message-input" placeholder="Votre message..." name="message"></textarea>
+                  <button type="submit" class="message-submit">Envoyer</button>
+                </form>
+              
+            </div>
+        </div>
+    </div>
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>

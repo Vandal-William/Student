@@ -1,0 +1,11 @@
+:root {
+    /* background-color */
+    --main-color-bgc: #ebece4;
+    --chat-interface-bgc:#e5b181;
+    --secondary-color-bgc: #ededed;
+    --action-main-bgc: #84b0d4;
+    --loader-secondary-bgc:rgba(0, 0, 0, 0.1);
+    /* text-color */
+    --txt-main-color: #fff;
+    --txt-secondary-color: #000;
+  }

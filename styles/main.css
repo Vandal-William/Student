@@ -107,7 +107,7 @@ body{
 #generate{
     position: absolute;
     right: 1%;
-    bottom: 10%;
+    bottom: 120px;
     padding: 10px;
     z-index: 1;
     cursor: pointer;
