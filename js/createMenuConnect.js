@@ -11,11 +11,14 @@ export function createMenuConnect(user, access, languages){
     
     if(user){
         accordionContainer.innerHTML= "";
-        // Créez l'accordéon en JavaScript
         languages.forEach((section, index) => {
-            
+            console.log(access)
+            console.log(user)
+            console.log(languages)
             const lang = access.find(lang => lang.access_lang.includes(section.title) && lang.userId === user);
-            sessionStorage.setItem('pseudo', lang.pseudoGit);
+            if(lang){
+                sessionStorage.setItem('pseudo', lang.pseudoGit);
+            }
             const sectionElement = document.createElement('div');
             sectionElement.classList.add('accordion-section');
     
