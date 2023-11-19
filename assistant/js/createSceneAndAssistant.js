@@ -5,14 +5,12 @@ import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples
 
 let scene;
 let mixer;
+let character;
 
 export function createSceneAndAssistant({animation, time}) {
 
-    const sceneDiv = document.querySelector('.assistant')
-    // Créer la scène, la caméra et le renderer
-
-      // Nettoyer la scène existante si elle est définie
-      if (scene) {
+    // Nettoyer la scène existante si elle est définie
+    if (scene) {
         while (scene.children.length > 0) {
             scene.remove(scene.children[0]);
         }
@@ -21,10 +19,11 @@ export function createSceneAndAssistant({animation, time}) {
         scene = new THREE.Scene();
     }
 
+    // Créer la scène, la caméra et le renderer
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    sceneDiv.appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
     
     // Ajouter une lumière ambiante à la scène
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Couleur blanche, intensité augmentée à 1
@@ -32,21 +31,33 @@ export function createSceneAndAssistant({animation, time}) {
 
     // Créer une géométrie de plan
     const groundGeometry = new THREE.PlaneGeometry(1000, 1000); // Taille du plan
-    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, side: THREE.DoubleSide }); // Matériau du sol
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial); // Créer le maillage du sol
 
-    // Rotation du sol pour le mettre à plat
-    ground.rotation.x = -Math.PI / 2; // Rotation de 90 degrés sur l'axe X
+    // Charger la texture PNG pour le sol
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load('./fbx/textures/ground2.png', (texture) => {
+        const groundMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide }); // Utiliser la texture comme map dans le matériau du sol
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial); // Créer le maillage du sol
 
-    // Positionner le sol en dessous du personnage
-    ground.position.setY(-110); // Placer le sol légèrement en dessous du personnage
+        // Rotation du sol pour le mettre à plat
+        ground.rotation.x = -Math.PI / 2; // Rotation de 90 degrés sur l'axe X
 
-    // Ajouter le sol à la scène
-    scene.add(ground);
+        // Positionner le sol en dessous du personnage
+        ground.position.setY(-110); // Placer le sol légèrement en dessous du personnage
+
+        // Ajouter le sol à la scène
+        scene.add(ground);
+    });
 
     // Créer les murs
-    const wallGeometry = new THREE.BoxGeometry(1000, 430, 10); // Taille des murs (largeur, hauteur, profondeur)
-    const wallMaterial = new THREE.MeshBasicMaterial({ color: 0xADD8E6 }); // Matériau des murs
+    // Charger la texture pour les murs depuis une image JPG
+    const textureWall = new THREE.TextureLoader();
+    const wallTexture = textureWall.load('./fbx/textures/wall1.png');
+
+    // Créer le matériau avec la texture chargée
+    const wallMaterial = new THREE.MeshBasicMaterial({ map: wallTexture });
+
+    // Créer les murs avec le matériau contenant la texture
+    const wallGeometry = new THREE.BoxGeometry(1000, 430, 10); 
 
     // Mur opposé à la caméra
     const wall1 = new THREE.Mesh(wallGeometry, wallMaterial);
@@ -68,9 +79,11 @@ export function createSceneAndAssistant({animation, time}) {
     const loader = new FBXLoader();
     loader.setPath('./fbx/');
     loader.load('amanda.fbx', function (fbx) {
-    
+
+        character = fbx
+
         // Calculer la boîte englobante du personnage pour obtenir ses dimensions
-        const box = new THREE.Box3().setFromObject(fbx);
+        const box = new THREE.Box3().setFromObject(character);
         const center = new THREE.Vector3();
         box.getCenter(center);
     
@@ -87,7 +100,7 @@ export function createSceneAndAssistant({animation, time}) {
     
         // Positionner la caméra pour regarder le personnage de face
         const frontVector = new THREE.Vector3(0, 0, 1); // Le personnage fait face dans la direction Z (ou autre, selon son orientation)
-        const direction = frontVector.applyQuaternion(fbx.quaternion);
+        const direction = frontVector.applyQuaternion(character.quaternion);
         const cameraPosition = direction.multiplyScalar(distance * 1.2).add(center); // Ajouter un petit décalage pour éviter que la caméra ne soit trop proche
         camera.position.copy(cameraPosition);
         camera.lookAt(center);
@@ -106,7 +119,7 @@ export function createSceneAndAssistant({animation, time}) {
                 mixer.stopAllAction(); // Arrêter l'animation actuelle si elle est en cours
             }
 
-            mixer = new THREE.AnimationMixer(fbx);
+            mixer = new THREE.AnimationMixer(character);
             const anima = mixer.clipAction(anim.animations[0])
             if(time){
                 anima.setLoop(THREE.LoopOnce); // Indiquer que l'animation doit se jouer une seule fois
@@ -124,9 +137,63 @@ export function createSceneAndAssistant({animation, time}) {
             console.error(error);
         });
 
-        scene.add(fbx); // Ajouter le personnage à la scène une fois le chargement terminé
+        scene.add(character); // Ajouter le personnage à la scène une fois le chargement terminé
+        // Détecter les clics sur le personnage
+        renderer.domElement.addEventListener('click', onCharacterClick);
+        renderer.domElement.addEventListener('mousemove', onMouseMove);
 
     }, undefined, function (error) {
         console.error(error);
     });
+
+    function onCharacterClick(event) {
+        // Récupérer les coordonnées normalisées du clic de la souris
+        const mouse = new THREE.Vector2();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+        // Créer un rayon depuis la caméra à travers la position du clic
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, camera);
+    
+        // Vérifier les intersections entre le rayon et le personnage
+        const intersects = raycaster.intersectObject(character, true);
+    
+        if (intersects.length > 0) {
+             // Si le personnage est cliqué, afficher le menu contextuel
+            const menu = document.getElementById('menu')
+            console.log(menu)
+            menu.style.left = "0px";
+            menu.style.top = "0px";
+            menu.style.display = "";
+        }
+    }
+    function onMouseMove(event) {
+        // Récupérer les coordonnées normalisées du clic de la souris
+        const mouse = new THREE.Vector2();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+        // Créer un rayon depuis la caméra à travers la position du clic
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, camera);
+    
+        // Vérifier les intersections entre le rayon et le personnage
+        const intersects = raycaster.intersectObject(character, true);
+    
+        if (intersects.length > 0) {
+            onCharacterMouseEnter();
+        } else {
+            onCharacterMouseLeave();
+        }
+    }
+
+    function onCharacterMouseEnter(event) {
+        document.body.style.cursor = 'pointer';
+    }
+    
+    function onCharacterMouseLeave() {
+        document.body.style.cursor = 'default';
+    }
+    
 }
