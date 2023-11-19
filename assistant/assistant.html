@@ -3,23 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Amanda</title>
     <link rel="stylesheet" href="./assistant.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
 </head>
 <body>
     <div class="scene">
         <div class="assistant">
-            <div class="radmenu"><a class="show">Outils</a>
-                <ul>
-                  <li id="tchat" class="nav-li"><a><img title="Tchat" src="./logo/chat-round-line-svgrepo-com.svg" alt=""></a></li>
-                  <li id="review" class="nav-li"><a><img src="./logo/review-file-svgrepo-com.svg" alt=""></a></li>
-                  <li id="stack-overflow" class="nav-li"><a><img src="./logo/stackoverflow-color-svgrepo-com.svg" alt=""></a></li>
-                  <li id="task" class=" nav-li"><a><img src="./logo/task-svgrepo-com.svg" alt=""></a></li>
-                  <li id="Indisponible" class="tchat nav-li"><a>Indisponible</a></li>
-                  <li id="Indisponible" class="tchat nav-li"><a>Indisponible</a></li>
-                </ul>
-            </div>
-
+          
             <div class="chat">
                 <div class="chat-title">
                   <h1 class="assistant-name">élina</h1>
@@ -34,8 +25,70 @@
                   <textarea type="text" class="message-input" placeholder="Votre message..." name="message"></textarea>
                   <button type="submit" class="message-submit">Envoyer</button>
                 </form>
-              
             </div>
+            <!--  -->
+            <div class="container">
+
+              <div class="left-view">
+                <i class="ion-navicon"></i>
+                <span class="nav-title">Personal Space</span>
+              </div>
+            
+              <div class="slide-menu-closed"></div>
+              <div class="menu-overlay"></div>
+            
+              <div class="right-view">  <i class="ion-ios-more-outline"></i>
+              </div>
+            
+              <div class="top-view">
+            
+            
+                <div class="color-overlay"></div>
+                <div class="main-title"><span class="hero-title">Mes Taches</span><span class="date">february 8,2017</span></div>
+            
+                <div class="text-input">
+                  <input type="text" placeholder="Search a task..." class="task-search"/>
+                  <i class="ion-ios-search-strong"></i>
+                </div>
+            
+                <div class="profile">
+                  <img src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg" alt="profile image" class="profile-img" />
+                  <div class="profile-details">
+                    <span class="profile-name">Ryan Barnes</span>
+                    <br />
+                    <span class="profile-job">Product Designer</span>
+                  </div>
+            
+                </div>
+              </div>
+            
+              <span class="floating-btn"><i class="ion-ios-plus-empty"></i></span>
+              <span class="task-added">Task Form Here!</span>
+            
+              <div class="bottom-view">
+                <div class="content">
+                  
+                  <div class="title"><span>Rigging</span><i class="ion-edit"></i></div>
+                  <span class="project-name">Ice Age Project</span>
+            
+                  <div class="task-card">
+                    <span class="task-time">5pm</span>
+                    <div class="task-heading-container">
+                      <span class="task-title" id="task-1">
+                        Catch up with Brian
+                      </span>
+                      <div class="task-actions-container">
+                        <i class="ion-ios-trash"></i>
+                        <i class="ion-android-time"></i>
+                        <i class="ion-android-done-all"></i>
+                      </div>
+                    </div>
+                    <span class="task-description">Mobile Project</span>
+                  </div>
+                </div>
+            </div>
+            <!--  -->
+            
         </div>
     </div>
     <script type="module" src="./js/main.js"></script>

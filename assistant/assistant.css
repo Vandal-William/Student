@@ -1,5 +1,6 @@
 @import url('./menu.css');
 @import url('./chat.css');
+@import url('./task.css');
 
 *{
     margin: 0;
@@ -13,7 +14,11 @@
     
 }
 .assistant{
-    background-position:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     width: clamp(300px, 100%, 1300px);
     height: clamp(200px, 100vh, 880px);
     margin: auto;
