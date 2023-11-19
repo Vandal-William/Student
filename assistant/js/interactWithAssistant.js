@@ -1,29 +1,24 @@
 import { assistantResponse } from "./assistantResponse.js";
 import { userRequest } from "./userRequest.js";
+import { changeCharacterAnimation } from './createSceneAndAssistant.js';
 
-const gif = document.querySelector(".elina");
-const chatHistory = document.querySelector(".chat_history");
+const chatHistory = document.querySelector(".chat-history");
 
 export function interactWithAssistant(message) {
   
     if(message !== ""){
 
-        userRequest(message, chatHistory, '@any');
-        
+        userRequest(message, chatHistory);
     }
 
     if (message.toLowerCase().includes("bonjour") ) {
         setTimeout(()=>{
-            gif.src = './gif/Elina/actions/hello.gif';
-            assistantResponse(`Bonjour ${sessionStorage.getItem('pseudo')} que puis-je faire pour vous ?`, chatHistory, '@any');
-        }, 1000)
-        setTimeout(() => {
-            gif.src = './gif/Elina/Elina.gif';
+            assistantResponse(`Bonjour ${sessionStorage.getItem('pseudo')} que puis-je faire pour vous ?`, chatHistory);
+            changeCharacterAnimation('hello', window.globalData.character);
+        }, 1000);
+        setTimeout(()=>{
+            changeCharacterAnimation('Bashful', window.globalData.character);
         }, 3000)
-        setTimeout(() => {
-            sessionStorage.setItem('isdrinking', "false");
-        }, 4000)
-     
     }
 }
 

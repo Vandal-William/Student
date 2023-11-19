@@ -3,11 +3,13 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.mod
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js';
 
+window.globalData = {};
 let scene;
+let camera;
 let mixer;
 let character;
 
-export function createSceneAndAssistant({animation, time}) {
+export function createSceneAndAssistant() {
 
     // Nettoyer la scène existante si elle est définie
     if (scene) {
@@ -20,7 +22,7 @@ export function createSceneAndAssistant({animation, time}) {
     }
 
     // Créer la scène, la caméra et le renderer
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -79,8 +81,9 @@ export function createSceneAndAssistant({animation, time}) {
     const loader = new FBXLoader();
     loader.setPath('./fbx/');
     loader.load('amanda.fbx', function (fbx) {
-
-        character = fbx
+        character = fbx;
+        window.globalData.character = fbx;
+        scene.add(character)
 
         // Calculer la boîte englobante du personnage pour obtenir ses dimensions
         const box = new THREE.Box3().setFromObject(character);
@@ -108,92 +111,101 @@ export function createSceneAndAssistant({animation, time}) {
         // Créer une instance de OrbitControls
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableZoom = false; // Désactiver le zoom
+        controls.mouseButtons = {
+            LEFT: THREE.MOUSE.ROTATE,
+            MIDDLE: THREE.MOUSE.DOLLY,
+            RIGHT: THREE.MOUSE.PAN,
+        };
         controls.update(); // Mettre à jour les contrôles
-        
-        // Charger une animation dans la fonction de chargement du modèle FBX
-        const animLoader = new FBXLoader();
-        animLoader.setPath('./fbx/animations/');
-        animLoader.load(`${animation}.fbx`, function (anim) {
 
+        function animate() {
+
+            requestAnimationFrame(animate);
             if (mixer) {
-                mixer.stopAllAction(); // Arrêter l'animation actuelle si elle est en cours
-            }
-
-            mixer = new THREE.AnimationMixer(character);
-            const anima = mixer.clipAction(anim.animations[0])
-            if(time){
-                anima.setLoop(THREE.LoopOnce); // Indiquer que l'animation doit se jouer une seule fois
-            }
-            anima.play();
-
-            function animate() {
-                requestAnimationFrame(animate);
                 mixer.update(0.03); // Mettre à jour le mixer à chaque frame
-                renderer.render(scene, camera);
             }
-            
-            animate();
-        }, undefined, function (error) {
-            console.error(error);
-        });
+            renderer.render(scene, camera);
+        }
+        
+        animate();
 
-        scene.add(character); // Ajouter le personnage à la scène une fois le chargement terminé
-        // Détecter les clics sur le personnage
         renderer.domElement.addEventListener('click', onCharacterClick);
         renderer.domElement.addEventListener('mousemove', onMouseMove);
 
+        function onCharacterClick(event) {
+            // Récupérer les coordonnées normalisées du clic de la souris
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            console.log(mouse.x,  mouse.y)
+        
+            // Créer un rayon depuis la caméra à travers la position du clic
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+        
+            // Vérifier les intersections entre le rayon et le personnage
+            const intersects = raycaster.intersectObject(character, true);
+        
+            if (intersects.length > 0) {
+                 // Si le personnage est cliqué, afficher le menu contextuel
+                const menu = document.getElementById('menu')
+                console.log(menu)
+                menu.style.left = `${ mouse.x + 740}px`;
+                menu.style.top = `${ mouse.y + 400}px`;
+                menu.style.display = "";
+            }
+        }
+        function onMouseMove(event) {
+            // Récupérer les coordonnées normalisées du clic de la souris
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        
+            // Créer un rayon depuis la caméra à travers la position du clic
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+        
+            // Vérifier les intersections entre le rayon et le personnage
+            const intersects = raycaster.intersectObject(character, true);
+        
+            if (intersects.length > 0) {
+                onCharacterMouseEnter();
+            } else {
+                onCharacterMouseLeave();
+            }
+        }
+    
+        function onCharacterMouseEnter(event) {
+            document.body.style.cursor = 'pointer';
+        }
+        
+        function onCharacterMouseLeave() {
+            document.body.style.cursor = 'default';
+        }
+
+        changeCharacterAnimation("Bashful", character)
     }, undefined, function (error) {
         console.error(error);
     });
 
-    function onCharacterClick(event) {
-        // Récupérer les coordonnées normalisées du clic de la souris
-        const mouse = new THREE.Vector2();
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     
-        // Créer un rayon depuis la caméra à travers la position du clic
-        const raycaster = new THREE.Raycaster();
-        raycaster.setFromCamera(mouse, camera);
-    
-        // Vérifier les intersections entre le rayon et le personnage
-        const intersects = raycaster.intersectObject(character, true);
-    
-        if (intersects.length > 0) {
-             // Si le personnage est cliqué, afficher le menu contextuel
-            const menu = document.getElementById('menu')
-            console.log(menu)
-            menu.style.left = "0px";
-            menu.style.top = "0px";
-            menu.style.display = "";
-        }
-    }
-    function onMouseMove(event) {
-        // Récupérer les coordonnées normalisées du clic de la souris
-        const mouse = new THREE.Vector2();
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    
-        // Créer un rayon depuis la caméra à travers la position du clic
-        const raycaster = new THREE.Raycaster();
-        raycaster.setFromCamera(mouse, camera);
-    
-        // Vérifier les intersections entre le rayon et le personnage
-        const intersects = raycaster.intersectObject(character, true);
-    
-        if (intersects.length > 0) {
-            onCharacterMouseEnter();
-        } else {
-            onCharacterMouseLeave();
-        }
-    }
+}
 
-    function onCharacterMouseEnter(event) {
-        document.body.style.cursor = 'pointer';
-    }
-    
-    function onCharacterMouseLeave() {
-        document.body.style.cursor = 'default';
-    }
-    
+export function changeCharacterAnimation(animationName, fbx) {
+    const animLoader = new FBXLoader();
+    animLoader.setPath('./fbx/animations/');
+    animLoader.load(`${animationName}.fbx`, function (anim) {
+        if (mixer) {
+            mixer.stopAllAction();
+        }
+
+        if (!mixer) {
+            mixer = new THREE.AnimationMixer(fbx);
+        }
+
+        const anima = mixer.clipAction(anim.animations[0]);
+        anima.play();
+    }, undefined, function (error) {
+        console.error(error);
+    });
 }

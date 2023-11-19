@@ -5,17 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amanda</title>
     <style>
+
       *{
         margin: 0;
         padding: 0;
       }
 
+      body{
+        overflow: hidden;
+      }
+
       li:hover{
         background: #ffffff4c;
       }
+
     </style>
 </head>
+
 <body style="position: relative;">
+
+<!-- MENU -->
 
   <div id="menu" 
     style="
@@ -35,15 +44,94 @@
       background-color: orange;
     "
     >
-      MENU <span id="close-menu" style="padding: 10px; color: red; font-weight: bold; cursor: pointer;">X</span>
+      Amanda <span id="close-menu" style="padding: 10px; color: red; font-weight: bold; cursor: pointer;">X</span>
     </span>
     <ul style="list-style-type: none; padding: 5px;">
-      <li style="padding: 5px; color: #fff;cursor: pointer;">Tchat</li>
-      <li style="padding: 5px; color: #fff;cursor: pointer;">Review</li>
-      <li style="padding: 5px; color: #fff;cursor: pointer;">Stack Overflow</li>
-      <li style="padding: 5px; color: #fff;cursor: pointer;">Projets</li>
+      <li id="tchat" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Tchat</li>
+      <li id="review" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Review</li>
+      <li id="stack-overflow" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Stack Overflow</li>
+      <li id="projets" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Projets</li>
     </ul>
   </div> 
+
+<!-- Chat -->
+
+  <div id="chat"
+    style="
+      width: 400px;
+      position: absolute;
+      height: 500px;
+      right: 1px;
+      bottom: 5px;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      display: none;
+    "
+  >
+    <div class="chat-bar"
+    style="
+      padding: 5px;
+      display: flex;
+      color: #fff;
+      background-color: orange;
+      font-weight: bold;
+      justify-content: space-between;
+    "
+    >
+    <span>Amanda</span>
+    <span id="close-chat" style="color: red; cursor: pointer;">X</span>
+    </div>
+
+    <div class="chat-history" 
+      style="
+        width: 90%;
+        height: 350px;
+        margin: auto;
+        padding: 10px;
+        background: black;
+        font-size: 12px;
+      "
+    >
+    </div>
+
+    <form 
+      id="chat-form"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+      "
+    >
+      <input 
+        type="text" 
+        name="message"
+        placeholder="Tapez votre message..."
+        style="
+          width: 70%;
+          background: black;
+          color: #fff;
+          padding: 10px;
+          border: none;
+          outline-color: black;
+        "
+      >
+      <button
+        style="
+          padding: 10px;
+          background: orange;
+          width: 20%;
+          border: none;
+        "
+      >
+        Envoyer
+      </button>
+    </form>
+  </div>
+
+ 
     <script type="module" src="./js/main.js"></script>
 </body>
 </html>
