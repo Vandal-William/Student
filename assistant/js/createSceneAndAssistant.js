@@ -150,8 +150,8 @@ export function createSceneAndAssistant() {
                  // Si le personnage est cliqué, afficher le menu contextuel
                 const menu = document.getElementById('menu')
                 console.log(menu)
-                menu.style.left = `${ mouse.x + 740}px`;
-                menu.style.top = `${ mouse.y + 400}px`;
+                menu.style.left = `${ event.pageX + 60}px`;
+                menu.style.top = `${ event.pageY }px`;
                 menu.style.display = "";
             }
         }
