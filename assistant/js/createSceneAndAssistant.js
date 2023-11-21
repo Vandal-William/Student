@@ -1,6 +1,7 @@
 // Importer les modules Three.js nécessaires
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
+import { RGBELoader } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/loaders/RGBELoader.js';
 
 window.globalData = {};
 let scene;
@@ -10,6 +11,7 @@ let character;
 let followCharacter = false;
 
 export function createSceneAndAssistant() {
+
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Control') {
@@ -39,13 +41,41 @@ export function createSceneAndAssistant() {
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+
+    //env
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+
+    const rgbeLoader = new RGBELoader();
+    rgbeLoader.setDataType(THREE.UnsignedByteType);
+
+    rgbeLoader.load('./fbx/env/sunset.hdr', function (texture) {
+        const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+        scene.background = envMap;
+        scene.environment = envMap;
+        const groundSize = 2000; // Taille du sol
+        const sphereSize = groundSize * 10; // Taille de la sphère, 10 fois plus grande que le sol
+
+
+        const sphereGeometry = new THREE.SphereGeometry(sphereSize, 60, 40);
+        const sphereMaterial = new THREE.MeshStandardMaterial({
+            map: texture, // Utilisez la texture HDR chargée précédemment
+            side: THREE.BackSide, // Assurez-vous que la texture est à l'intérieur de la sphère
+        });
+
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(sphere);
+
+        texture.dispose();
+        pmremGenerator.dispose();
+    });
     
     // Ajouter une lumière ambiante à la scène
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Couleur blanche, intensité augmentée à 1
     scene.add(ambientLight);
 
     // Créer une géométrie de plan
-    const groundGeometry = new THREE.PlaneGeometry(1000, 1000); // Taille du plan
+    const groundGeometry = new THREE.PlaneGeometry(2000, 2000); // Taille du plan
 
     // Charger la texture PNG pour le sol
     const textureLoader = new THREE.TextureLoader();
@@ -212,7 +242,6 @@ export function updateCameraPositionFront() {
 
 
 function updateCameraPositionBehind() {
-
     if (followCharacter && character) {
         const distanceBehind = -300; // Distance derrière le personnage
         const characterPosition = character.position.clone(); // Position du personnage
@@ -230,6 +259,14 @@ function updateCameraPositionBehind() {
         // Mettre à jour la position et la direction de la caméra
         camera.position.copy(newPosition);
         camera.lookAt(lookAtPosition);
+
+        // Ajuster la distance de vue et l'angle de vue pour voir plus loin
+        camera.far = 5000; // Augmenter la distance de vue
+        camera.updateProjectionMatrix(); // Mettre à jour la matrice de projection
+
+        // Augmenter l'angle de vue pour voir une plus grande partie de la scène
+        camera.fov = 90; // Augmenter l'angle de vue (FOV)
+        camera.updateProjectionMatrix(); // Mettre à jour la matrice de projection
     }
 }
 
