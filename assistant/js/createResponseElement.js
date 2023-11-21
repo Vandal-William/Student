@@ -2,6 +2,7 @@ export function createResponseElement(resultsDiv, {message, point, resume, exemp
 
     const div = document.createElement('div');
     div.classList.add('results-analysis')
+
     const p = document.createElement('p');
     const span = document.createElement('span');
     span.classList.add('point');

@@ -1,10 +1,10 @@
 const chatHistory = document.querySelector(".chat-history");
-
+const pseudo = sessionStorage.getItem('pseudo') ? sessionStorage.getItem('pseudo') : "vous";
 export function userRequest(message, container) {
 
     const chatLine = document.createElement('p');
     const chatLineSpan = document.createElement('span')
-    chatLineSpan.textContent = `${sessionStorage.getItem('pseudo')} :`;
+    chatLineSpan.textContent = `${pseudo} :`;
     chatLineSpan.style.fontWeight = "bold";
     chatLineSpan.style.color = "green";
     chatLine.textContent = `  ${message}`;

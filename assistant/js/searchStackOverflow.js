@@ -1,41 +1,27 @@
-import { assistantResponse } from "./assistantResponse.js";
-import { userRequest } from "./userRequest.js";
 import { loading } from './loading.js';
 
 const apiKey = 'saqRSu6vJ1AkbHM8FSrr1A((';
-const gif = document.querySelector(".elina");
-const chatHistory = document.querySelector(".chat_history");
-const resultAssistFlow = document.querySelector('.results-assistFlow');
+const resultAssistFlow = document.getElementById('result-div');
 const resultsDiv = document.createElement('div');
+const parentDiv = document.getElementById('results');
 
-export function searchStackOverflow(message) {
+export function searchStackOverflow(message, tag) {
   
   const apiUrl = 'https://api.stackexchange.com/2.3/search';
 
   if(message !== ""){
-      
-    userRequest(message, chatHistory, '@assistFlow');
+
+    parentDiv.style.display = "block";
     
     resultAssistFlow.appendChild(resultsDiv);
     const loadingIndicator = loading(resultsDiv);
 
-    setTimeout(()=>{
-      gif.src = './gif/Elina/actions/talking.gif';
-      assistantResponse(`Je recherche sur stackOverFlow !`, chatHistory, '@assistFlow');
-    }, 1000)
-    setTimeout(() => {
-        sessionStorage.setItem('isdrinking', "false");
-    }, 4000)
-    
-    const url = `${apiUrl}?key=${apiKey}&site=stackoverflow&order=desc&sort=activity&intitle=${message}`;
-    
+    const url = `${apiUrl}?key=${apiKey}&site=stackoverflow&order=desc&sort=activity&intitle=${message}&tagged=${tag}`;
+
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data.items) 
         setTimeout(() => {
-          assistantResponse(`Voici les résultats de la recherche`, chatHistory, '@assistFlow');
-          gif.src = './gif/Elina/Elina.gif';
           resultsDiv.removeChild(loadingIndicator);
           displayResults(data.items);
       }, 6000)

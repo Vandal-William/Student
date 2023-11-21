@@ -1,15 +1,30 @@
 // Importer les modules Three.js nécessaires
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js';
 
 window.globalData = {};
 let scene;
-let camera;
+let camera
 let mixer;
 let character;
+let followCharacter = false;
 
 export function createSceneAndAssistant() {
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Control') {
+            followCharacter = true;
+            window.globalData.followCharacter = true;
+        }
+    });
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'AltGraph') {
+            followCharacter = false;
+            window.globalData.followCharacter = false;
+            updateCameraPositionFront()
+        }
+    });
 
     // Nettoyer la scène existante si elle est définie
     if (scene) {
@@ -21,8 +36,6 @@ export function createSceneAndAssistant() {
         scene = new THREE.Scene();
     }
 
-    // Créer la scène, la caméra et le renderer
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -49,33 +62,6 @@ export function createSceneAndAssistant() {
         // Ajouter le sol à la scène
         scene.add(ground);
     });
-
-    // Créer les murs
-    // Charger la texture pour les murs depuis une image JPG
-    const textureWall = new THREE.TextureLoader();
-    const wallTexture = textureWall.load('./fbx/textures/wall1.png');
-
-    // Créer le matériau avec la texture chargée
-    const wallMaterial = new THREE.MeshBasicMaterial({ map: wallTexture });
-
-    // Créer les murs avec le matériau contenant la texture
-    const wallGeometry = new THREE.BoxGeometry(1000, 430, 10); 
-
-    // Mur opposé à la caméra
-    const wall1 = new THREE.Mesh(wallGeometry, wallMaterial);
-    wall1.position.set(0, 100, -500); // Placer le mur opposé à la caméra
-    scene.add(wall1);
-
-    // Murs de chaque côté du sol
-    const wall2 = new THREE.Mesh(wallGeometry, wallMaterial);
-    wall2.position.set(500, 100, 0); // Placer le mur à droite
-    wall2.rotation.y = Math.PI / 2; // Faire une rotation de 90 degrés pour le placer à droite
-    scene.add(wall2);
-
-    const wall3 = new THREE.Mesh(wallGeometry, wallMaterial);
-    wall3.position.set(-500, 100, 0); // Placer le mur à gauche
-    wall3.rotation.y = -Math.PI / 2; // Faire une rotation de -90 degrés pour le placer à gauche
-    scene.add(wall3);
     
     // Charger le modèle FBX du personnage
     const loader = new FBXLoader();
@@ -98,31 +84,29 @@ export function createSceneAndAssistant() {
         const size = new THREE.Vector3();
         box.getSize(size);
         const maxDim = Math.max(size.x, size.y, size.z);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const fov = camera.fov * (Math.PI / 180);
         const distance = Math.abs(maxDim / Math.sin(fov / 2));
-    
-        // Positionner la caméra pour regarder le personnage de face
-        const frontVector = new THREE.Vector3(0, 0, 1); // Le personnage fait face dans la direction Z (ou autre, selon son orientation)
-        const direction = frontVector.applyQuaternion(character.quaternion);
-        const cameraPosition = direction.multiplyScalar(distance * 1.2).add(center); // Ajouter un petit décalage pour éviter que la caméra ne soit trop proche
-        camera.position.copy(cameraPosition);
-        camera.lookAt(center);
 
-        // Créer une instance de OrbitControls
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableZoom = false; // Désactiver le zoom
-        controls.mouseButtons = {
-            LEFT: THREE.MOUSE.ROTATE,
-            MIDDLE: THREE.MOUSE.DOLLY,
-            RIGHT: THREE.MOUSE.PAN,
-        };
-        controls.update(); // Mettre à jour les contrôles
+        // Positionner la caméra devant le personnage dès le départ
+        const distanceFront = 300; // Distance devant le personnage
+        const offsetYb = 150; // Ajustez cette valeur selon votre besoin
+        const cameraOffset = new THREE.Vector3(0, offsetYb, distanceFront);
+        const rotatedOffset = cameraOffset.applyQuaternion(character.quaternion);
+        const cameraPosition = character.position.clone().add(rotatedOffset); // Position de la caméra par rapport au personnage
+
+         // Créer la caméra
+       
+        camera.position.copy(cameraPosition);
+        camera.lookAt(character.position); // Regarder le personnage dès le départ
+
 
         function animate() {
 
             requestAnimationFrame(animate);
+            updateCameraPositionBehind()
             if (mixer) {
-                mixer.update(0.03); // Mettre à jour le mixer à chaque frame
+                mixer.update(0.02); // Mettre à jour le mixer à chaque frame
             }
             renderer.render(scene, camera);
         }
@@ -137,8 +121,7 @@ export function createSceneAndAssistant() {
             const mouse = new THREE.Vector2();
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-            console.log(mouse.x,  mouse.y)
-        
+         
             // Créer un rayon depuis la caméra à travers la position du clic
             const raycaster = new THREE.Raycaster();
             raycaster.setFromCamera(mouse, camera);
@@ -149,7 +132,6 @@ export function createSceneAndAssistant() {
             if (intersects.length > 0) {
                  // Si le personnage est cliqué, afficher le menu contextuel
                 const menu = document.getElementById('menu')
-                console.log(menu)
                 menu.style.left = `${ event.pageX + 60}px`;
                 menu.style.top = `${ event.pageY }px`;
                 menu.style.display = "";
@@ -209,3 +191,164 @@ export function changeCharacterAnimation(animationName, fbx) {
         console.error(error);
     });
 }
+
+export function updateCameraPositionFront() {
+    if (character) {
+        const distanceFront = 300; // Distance devant le personnage
+
+        const forwardVector = new THREE.Vector3(0, 0, -1); // Vecteur regardant vers l'avant
+        forwardVector.applyQuaternion(character.quaternion);
+
+        const offset = new THREE.Vector3(0, 150, distanceFront);
+        const rotatedOffset = offset.applyQuaternion(character.quaternion);
+        const newPosition = character.position.clone().add(rotatedOffset);
+
+        const lookAtPosition = character.position.clone().add(forwardVector); // Utiliser le vecteur regardant vers l'avant
+
+        camera.position.copy(newPosition);
+        camera.lookAt(lookAtPosition);
+    }
+}
+
+
+function updateCameraPositionBehind() {
+
+    if (followCharacter && character) {
+        const distanceBehind = -300; // Distance derrière le personnage
+        const characterPosition = character.position.clone(); // Position du personnage
+
+        // Calculer la nouvelle position de la caméra derrière le personnage
+        const offset = new THREE.Vector3(0, 150, distanceBehind);
+        const rotatedOffset = offset.applyQuaternion(character.quaternion);
+        const newPosition = characterPosition.clone().add(rotatedOffset);
+
+        // Faire en sorte que la caméra regarde vers le personnage depuis l'arrière
+        const backwardVector = new THREE.Vector3(0, 0, -1); // Vecteur regardant vers l'arrière
+        const direction = backwardVector.applyQuaternion(character.quaternion);
+        const lookAtPosition = characterPosition.clone().add(direction);
+
+        // Mettre à jour la position et la direction de la caméra
+        camera.position.copy(newPosition);
+        camera.lookAt(lookAtPosition);
+    }
+}
+
+export function moveCharacterForward() {
+
+    if (followCharacter && character) {
+        const speed = 3; // Vitesse de déplacement du personnage
+
+        // Vecteur de direction inverse vers laquelle le personnage regarde pour avancer
+        const forwardVector = new THREE.Vector3(0, 0, 1); // Utilisation de l'axe Z positif pour avancer
+        forwardVector.applyQuaternion(character.quaternion);
+
+        // Mettre à jour la position du personnage en fonction de sa direction inverse pour avancer
+        const newPosition = character.position.clone().add(forwardVector.multiplyScalar(speed));
+        character.position.copy(newPosition);
+
+        // Mettre à jour la position de la caméra pour la maintenir derrière le personnage
+        const distanceBehind = -100; // Distance derrière le personnage
+        const offset = new THREE.Vector3(0, 150, distanceBehind);
+        const rotatedOffset = offset.applyQuaternion(character.quaternion);
+        const cameraPosition = character.position.clone().add(rotatedOffset);
+
+        // Mettre à jour la position de la caméra et la diriger vers le personnage depuis l'arrière
+        const backwardVector = new THREE.Vector3(0, 0, -1); // Vecteur regardant vers l'arrière
+        const cameraDirection = backwardVector.applyQuaternion(character.quaternion);
+        const lookAtPosition = character.position.clone().add(cameraDirection);
+        
+        camera.position.copy(cameraPosition);
+        camera.lookAt(lookAtPosition);
+    }
+}
+
+let turning = false;
+let targetAngle = 0;
+const turnSpeed = Math.PI / 80;
+
+export function turnCharacterRight() {
+
+    if (followCharacter && character && !turning) {
+        targetAngle -= Math.PI / 80; // Réduire l'angle pour tourner de 90 degrés vers la droite
+        turning = true;
+
+        function animateRotation() {
+            const currentAngle = character.rotation.y;
+            const delta = targetAngle - currentAngle;
+            const rotationAmount = Math.min(turnSpeed, Math.abs(delta)) * Math.sign(delta);
+
+            character.rotation.y += rotationAmount;
+
+            const forwardVector = new THREE.Vector3(0, 0, 1);
+            forwardVector.applyQuaternion(character.quaternion);
+
+            const speed = 1; // Vitesse de déplacement du personnage
+            const newPosition = character.position.clone().add(forwardVector.multiplyScalar(speed));
+            character.position.copy(newPosition);
+
+            const backwardVector = new THREE.Vector3(0, 0, -1);
+            backwardVector.applyQuaternion(character.quaternion);
+
+            const distanceBehind = -300;
+            const offset = new THREE.Vector3(0, 150, distanceBehind);
+            const rotatedOffset = offset.applyQuaternion(character.quaternion);
+            const cameraPosition = character.position.clone().add(rotatedOffset);
+            const lookAtPosition = character.position.clone().add(backwardVector);
+
+            camera.position.copy(cameraPosition);
+            camera.lookAt(lookAtPosition);
+
+            if (delta !== 0) {
+                requestAnimationFrame(animateRotation);
+            } else {
+                turning = false;
+            }
+        }
+
+        animateRotation();
+    }
+}
+
+export function turnCharacterLeft() {
+
+    if (followCharacter && character && !turning) {
+        targetAngle += Math.PI / 80; // Augmenter l'angle pour tourner de 90 degrés vers la gauche
+        turning = true;
+
+        function animateRotation() {
+            const currentAngle = character.rotation.y;
+            const delta = targetAngle - currentAngle;
+            const rotationAmount = Math.min(turnSpeed, Math.abs(delta)) * Math.sign(delta);
+
+            character.rotation.y += rotationAmount;
+
+            const forwardVector = new THREE.Vector3(0, 0, 1);
+            forwardVector.applyQuaternion(character.quaternion);
+
+            const speed = 1; // Vitesse de déplacement du personnage
+            const newPosition = character.position.clone().add(forwardVector.multiplyScalar(speed));
+            character.position.copy(newPosition);
+
+            const backwardVector = new THREE.Vector3(0, 0, -1);
+            backwardVector.applyQuaternion(character.quaternion);
+
+            const distanceBehind = -300;
+            const offset = new THREE.Vector3(0, 150, distanceBehind);
+            const rotatedOffset = offset.applyQuaternion(character.quaternion);
+            const cameraPosition = character.position.clone().add(rotatedOffset);
+            const lookAtPosition = character.position.clone().add(backwardVector);
+
+            camera.position.copy(cameraPosition);
+            camera.lookAt(lookAtPosition);
+
+            if (delta !== 0) {
+                requestAnimationFrame(animateRotation);
+            } else {
+                turning = false;
+            }
+        }
+
+        animateRotation();
+    }
+}
+

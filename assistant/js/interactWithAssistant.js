@@ -13,7 +13,8 @@ export function interactWithAssistant(message) {
 
     if (message.toLowerCase().includes("bonjour") ) {
         setTimeout(()=>{
-            assistantResponse(`Bonjour ${sessionStorage.getItem('pseudo')} que puis-je faire pour vous ?`, chatHistory);
+            const pseudo = sessionStorage.getItem('pseudo') ? sessionStorage.getItem('pseudo') : "";
+            assistantResponse(`Bonjour ${pseudo} que puis-je faire pour vous ?`, chatHistory);
             changeCharacterAnimation('hello', window.globalData.character);
         }, 1000);
         setTimeout(()=>{

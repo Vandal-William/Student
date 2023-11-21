@@ -19,6 +19,126 @@
         background: #ffffff4c;
       }
 
+      .review{
+        position: absolute;
+        bottom: 10px;
+        background: #00000071;
+        color: #fff;
+        padding: 10px;
+        width: 480px;
+        right: 1px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        display: none;
+      }
+
+      .select-lang{
+        padding: 5px;
+        width: 20%;
+        background: #000;
+        color: #fff;
+        border: none;
+      }
+
+      .review-button{
+        padding: 5px;
+        width: 20%;
+        border: none;
+        background: orange;
+      }
+
+      .close{
+        color: red;
+        cursor: pointer;
+      }
+
+      /*============== Div results review ================*/
+
+      .results-analysis{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .point{
+        font-weight: bold;
+        font-size: 17px;
+      }
+
+      .response{
+        width: 80%;
+        
+      }
+
+      .exemple{
+        width: 100%;
+        font-weight: bold;
+
+      }
+
+      .resume{
+        width: 100%;
+        font-style: italic;
+      }
+
+      /*========= overflow-form =========*/
+
+      .input-overflow{
+        padding: 5px;
+        width: 50%;
+        background: #000;
+        color: #fff;
+        border: none;
+      }
+
+      /*======== results div stack overflow =========*/
+
+      .result-row{
+        padding: 10px;
+        gap: 10px;
+        background-color: #ffffffaf;
+        margin-bottom: 10px;
+      }
+
+      .result-title{
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        padding: 5px;
+      }
+
+      .result-id{
+        padding: 10px;
+      }
+
+      .result-link{
+        text-decoration: none;
+        color: black;
+    
+      }
+
+      /*========== Loader ==============*/
+
+      .loader {
+        border: 4px solid #eaeaea;
+        border-top: 4px solid orange;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
     </style>
 </head>
 
@@ -44,13 +164,14 @@
       background-color: orange;
     "
     >
-      Amanda <span id="close-menu" style="padding: 10px; color: red; font-weight: bold; cursor: pointer;">X</span>
+      Amanda <span class="close" style="padding: 10px; color: red; font-weight: bold; cursor: pointer;">X</span>
     </span>
     <ul style="list-style-type: none; padding: 5px;">
       <li id="tchat" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Tchat</li>
       <li id="review" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Review</li>
       <li id="stack-overflow" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Stack Overflow</li>
-      <li id="projets" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Projets</li>
+      <li id="projets" class="amanda-menu" style="padding: 5px; color: #fff;cursor: pointer;">Projets</li> 
+  
     </ul>
   </div> 
 
@@ -81,7 +202,7 @@
     "
     >
     <span>Amanda</span>
-    <span id="close-chat" style="color: red; cursor: pointer;">X</span>
+    <span class="close" style="color: red; cursor: pointer;">X</span>
     </div>
 
     <div class="chat-history" 
@@ -131,7 +252,95 @@
     </form>
   </div>
 
- 
-    <script type="module" src="./js/main.js"></script>
+  <!-- Results Div -->
+
+  <div
+    id="results" 
+    style="
+      position: absolute;
+      right: 1px;
+      top: 10px;
+      width: 500px;
+      height: 800px;
+      background: #00000073;
+      display: none;
+    "
+  >
+  <div
+  style="
+    padding: 5px;
+    display: flex;
+    color: #fff;
+    background-color: orange;
+    font-weight: bold;
+    justify-content: space-between;
+  "
+  >
+    <span>Résultat</span>
+    <span class="close" style="color: red; cursor: pointer;">X</span>
+  </div>
+    <div 
+    id="result-div"
+    style="
+      height: 750px;
+      padding: 10px;
+      overflow: auto;
+    "
+    >
+    </div>
+  </div>
+
+  <!-- Review form -->
+
+  <form id="review-form" class="review">
+    <input type="file" name="file" accept=".html">
+    <select class="select-lang" name="language">
+      <option value="html">HTML</option>
+    </select>
+    <button class="review-button">Envoyer</button>
+    <div>
+      <span class="close">X</span>
+    </div>
+  </form>
+
+  <!-- stack overflow form -->
+
+  <form id="overflow-form" class="review">
+    <input class="input-overflow" type="text" name="question" placeholder="Tapez votre question ici...">
+    <select class="select-lang" name="language">
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="javascript">JavaScript</option>
+    </select>
+    <button class="review-button">Envoyer</button>
+    <div>
+      <span class="close">X</span>
+    </div>
+  </form>
+
+ <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+  <script>
+    
+    const firebaseConfig = {
+            
+            apiKey: "AIzaSyDXDGJkiUMg2w1CBD-oIfmNCwfr4ZllxTM",
+            authDomain: "students-117c7.firebaseapp.com",
+            databaseURL: "https://students-117c7-default-rtdb.firebaseio.com",
+            projectId: "students-117c7",
+            storageBucket: "students-117c7.appspot.com",
+            messagingSenderId: "586492384664",
+            appId: "1:586492384664:web:68defbe6c018e7397247ed",
+            measurementId: "G-N5Z3T6KEK1"
+            
+          };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+  </script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>

@@ -1,18 +1,15 @@
 import { createResponseElement } from "./createResponseElement.js";
-import { assistantResponse } from "./assistantResponse.js";
 import { loading } from './loading.js';
 
-const chatHistory = document.querySelector(".chat_history");
 const resultsDiv = document.createElement('div');
-const gif = document.querySelector(".elina");
-const results_review = document.querySelector('.results-review');
+const results = document.getElementById('result-div');
+const parentDiv = document.getElementById('results');
 
 export function htmlAnalysis(content) {
+    parentDiv.style.display = "block";
 
-    results_review.appendChild(resultsDiv);
+    results.appendChild(resultsDiv);
     const loadingIndicator = loading(resultsDiv);
-    assistantResponse(`l'analyse de votre fichier est en cours...`, chatHistory, '@review');
-    gif.src = './gif/Elina/actions/talking.gif';
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(content, 'text/html');
@@ -46,8 +43,6 @@ export function htmlAnalysis(content) {
     }  
     
     setTimeout(() => {
-        assistantResponse(`Voici les résultats de l'analyse`, chatHistory, '@review');
-        gif.src = './gif/Elina/Elina.gif';
         resultsDiv.removeChild(loadingIndicator);
         resultsDiv.style.opacity = '0';
     }, 4000)
