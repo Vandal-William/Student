@@ -1,9 +1,10 @@
 import {changeCharacterAnimation} from "./createSceneAndAssistant.js";
-import { moveCharacterForward, turnCharacterRight, turnCharacterLeft } from "./createSceneAndAssistant.js";
+import { moveCharacterForward, moveCharacterBackward ,turnCharacterRight, turnCharacterLeft } from "./createSceneAndAssistant.js";
 
 export function moveCharacter(){
 
-    let ArrowUp = false; // Variable pour suivre l'état de la touche Z
+    let ArrowUp = false;
+    let ArrowDown = false; 
     let ArrowRight = false;
     let ArrowLeft = false;
 
@@ -38,12 +39,21 @@ export function moveCharacter(){
                 if(ArrowLeft){
                     turnCharacterLeft();
                 }
+            }else if (event.key === 'ArrowDown') {
+                ArrowDown = true;
+                if(!animationPlaying){
+                    animationPlaying = true;
+                    changeCharacterAnimation("WalkInPlace", window.globalData.character);
+                }
+                if(ArrowDown){
+                    moveCharacterBackward();
+                }
             }
         }
     });
 
     document.addEventListener('keyup', function(event) {
-        if (event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
             animationPlaying = false;
             changeCharacterAnimation("Idle", window.globalData.character);
         }

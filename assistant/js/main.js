@@ -3,7 +3,7 @@ import {navigate} from './navigate.js';
 import { interactWithAssistant } from './interactWithAssistant.js';
 import { moveCharacter } from './moveCharacter.js';
 import {htmlAnalysis} from './htmlAnalysis.js';
-import {searchStackOverflow} from './searchStackOverflow.js'
+import {searchStackOverflow} from './searchStackOverflow.js';
 
 createSceneAndAssistant();
 moveCharacter();

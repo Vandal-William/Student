@@ -9,6 +9,8 @@ let camera
 let mixer;
 let character;
 let followCharacter = false;
+let books;
+let drawerP;
 
 export function createSceneAndAssistant() {
 
@@ -51,21 +53,8 @@ export function createSceneAndAssistant() {
 
     rgbeLoader.load('./fbx/env/sunset.hdr', function (texture) {
         const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-        scene.background = envMap;
-        scene.environment = envMap;
-        const groundSize = 2000; // Taille du sol
-        const sphereSize = groundSize * 10; // Taille de la sphère, 10 fois plus grande que le sol
-
-
-        const sphereGeometry = new THREE.SphereGeometry(sphereSize, 60, 40);
-        const sphereMaterial = new THREE.MeshStandardMaterial({
-            map: texture, // Utilisez la texture HDR chargée précédemment
-            side: THREE.BackSide, // Assurez-vous que la texture est à l'intérieur de la sphère
-        });
-
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        scene.add(sphere);
-
+        scene.background = envMap; // Appliquer la texture comme arrière-plan de la scène
+    
         texture.dispose();
         pmremGenerator.dispose();
     });
@@ -75,22 +64,120 @@ export function createSceneAndAssistant() {
     scene.add(ambientLight);
 
     // Créer une géométrie de plan
-    const groundGeometry = new THREE.PlaneGeometry(2000, 2000); // Taille du plan
+    const groundGeometry = new THREE.PlaneGeometry(1000, 1000); // Taille du plan
+    const groundMaterial = new THREE.MeshStandardMaterial({
+        transparent: true,
+        opacity: 0.3, // Ajustez l'opacité selon vos besoins
+        roughness: 0.1, // Réglage de la rugosité
+        metalness: 0.9, // Réglage de la métallisation
+    });
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    
+    // Rotation du sol pour le mettre à plat
+    ground.rotation.x = -Math.PI / 2; // Rotation de 90 degrés sur l'axe X
+    
+    // Positionner le sol en dessous du personnage
+    ground.position.setY(-110); // Placer le sol légèrement en dessous du personnage
+    
+    // Ajouter le sol à la scène
+    scene.add(ground);
 
-    // Charger la texture PNG pour le sol
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load('./fbx/textures/ground2.png', (texture) => {
-        const groundMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide }); // Utiliser la texture comme map dans le matériau du sol
-        const ground = new THREE.Mesh(groundGeometry, groundMaterial); // Créer le maillage du sol
+    // Charger l'objet Drawer
+    const loaderDrawer = new FBXLoader();
+    loaderDrawer.load('./fbx/furnitures/drawer/drawer.fbx', function (drawer) {
+        drawerP = drawer;
+        const box = new THREE.Box3().setFromObject(drawer); // Obtenir la boîte englobante de l'objet FBX
+        const size = new THREE.Vector3();
+        box.getSize(size); // Obtenir les dimensions de l'objet FBX
 
-        // Rotation du sol pour le mettre à plat
-        ground.rotation.x = -Math.PI / 2; // Rotation de 90 degrés sur l'axe X
+        const objectHeight = size.y; // Hauteur de l'objet FBX
 
-        // Positionner le sol en dessous du personnage
-        ground.position.setY(-110); // Placer le sol légèrement en dessous du personnage
+        // Ajuster la taille de l'objet FBX
+        const scaleFactor = 2; // Facteur d'agrandissement, vous pouvez ajuster cette valeur selon vos besoins
+        drawer.scale.set(scaleFactor, scaleFactor, scaleFactor); // Ajuster la taille selon les trois axes
 
-        // Ajouter le sol à la scène
-        scene.add(ground);
+        // Placer l'objet FBX sur le sol
+        drawer.position.setY(-150 + objectHeight / 2); // Placer l'objet à la hauteur du sol plus la moitié de sa hauteur
+        drawer.position.setX(400);
+        drawer.position.setZ(-450);
+
+        const textureLoader = new THREE.TextureLoader();
+
+        // Chargement de la texture diffuse (albedo)
+        const diffuseTexture = textureLoader.load('./fbx/furnitures/drawer/textures/drawerDiff.jpg');
+        // Chargement des autres textures
+        const metalnessTexture = textureLoader.load('./fbx/furnitures/drawer/textures/drawerMetal.exr');
+        const roughnessTexture = textureLoader.load('./fbx/furnitures/drawer/textures/drawerRough.jpg');
+        const normalTexture = textureLoader.load('./fbx/furnitures/drawer/textures/drawerNorGl.exr');
+    
+        // Création du matériau PBR
+        const material = new THREE.MeshStandardMaterial({
+            map: diffuseTexture,
+            metalnessMap: metalnessTexture,
+            roughnessMap: roughnessTexture,
+            normalMap: normalTexture,
+            // Ajoutez d'autres propriétés de matériau si nécessaire
+        });
+    
+        drawer.traverse(child => {
+            if (child.isMesh) {
+                child.material = material; // Appliquer le matériau à chaque maillage de l'objet FBX
+            }
+        });
+
+         // Charger le second objet FBX (à placer sur le tiroir)
+        const encyclopedias = new FBXLoader();
+        encyclopedias.load('./fbx/furnitures/encyclopedia/encyclopedia.fbx', function (encyclopedia) {
+            // Positionner le second objet par rapport au premier (le tiroir)
+            books = encyclopedia
+            encyclopedia.position.set(-15, 55, 10);
+            window.globalData.encyclopedia = encyclopedia
+
+            // Chargement des textures
+            const textureLoader = new THREE.TextureLoader();
+            const coverDiffTexture = textureLoader.load('./fbx/furnitures/encyclopedia/textures/coverDiff.png');
+            const coverMetallicTexture = textureLoader.load('./fbx/furnitures/encyclopedia/textures/coverMetallic.exr');
+            const coverNorGlTexture = textureLoader.load('./fbx/furnitures/encyclopedia/textures/coverNorGl.png');
+            const coverRoughnessTexture = textureLoader.load('./fbx/furnitures/encyclopedia/textures/coverRoughness.exr');
+            const paperDiffTexture = textureLoader.load('./fbx/furnitures/encyclopedia/textures/paperDiff.png');
+            const paperNorGlTexture = textureLoader.load('./fbx/furnitures/encyclopedia/textures/paperNorGl.png');
+            const paperRoughnessTexture = textureLoader.load('./fbx/furnitures/encyclopedia/textures/paperRoughness.exr');
+
+            // Création du matériau avec textures
+            const material = new THREE.MeshStandardMaterial({
+                map: paperDiffTexture,
+                normalMap: paperNorGlTexture,
+                roughnessMap: paperRoughnessTexture,
+                // Autres propriétés de matériau si nécessaire
+            });
+            console.log(encyclopedia)
+            // Appliquer le matériau et les textures aux parties spécifiques du modèle
+            encyclopedia.traverse(child => {
+                if (child.isMesh) {
+                    const name = child.name.toLowerCase(); // Nom de la pièce en minuscules pour vérification
+                    console.log(name)
+
+                    // Vérifier le nom de la pièce pour appliquer les textures correspondantes
+                    if (name.includes('book')) {
+                        child.material = new THREE.MeshStandardMaterial({
+                            map: coverDiffTexture,
+                            normalMap: coverNorGlTexture,
+                            roughnessMap: coverRoughnessTexture,
+                            metalnessMap: coverMetallicTexture,
+                            // Autres propriétés de matériau si nécessaire
+                        });
+                    } else if (name.includes('paper')) {
+                        child.material = material;
+                    }
+                }
+            });
+            // Ajouter le second objet comme enfant du tiroir
+            drawer.add(encyclopedia); // Cela place le second objet sur le tiroir
+
+            // ... (autres opérations si nécessaire)
+            scene.add(drawer); // Ajouter le tiroir (avec le second objet) à la scène
+        });
+        
     });
     
     // Charger le modèle FBX du personnage
@@ -130,7 +217,6 @@ export function createSceneAndAssistant() {
         camera.position.copy(cameraPosition);
         camera.lookAt(character.position); // Regarder le personnage dès le départ
 
-
         function animate() {
 
             requestAnimationFrame(animate);
@@ -142,6 +228,7 @@ export function createSceneAndAssistant() {
         }
         
         animate();
+
 
         renderer.domElement.addEventListener('click', onCharacterClick);
         renderer.domElement.addEventListener('mousemove', onMouseMove);
@@ -271,7 +358,6 @@ function updateCameraPositionBehind() {
 }
 
 export function moveCharacterForward() {
-
     if (followCharacter && character) {
         const speed = 3; // Vitesse de déplacement du personnage
 
@@ -281,6 +367,17 @@ export function moveCharacterForward() {
 
         // Mettre à jour la position du personnage en fonction de sa direction inverse pour avancer
         const newPosition = character.position.clone().add(forwardVector.multiplyScalar(speed));
+
+        // Vérifier la distance entre le personnage et l'objet
+        const radius = 100; // Rayon autour du personnage pour la détection de l'objet
+        const distanceToSpecificObject = character.position.distanceTo(drawerP.position);
+        console.log(parseInt(distanceToSpecificObject));
+
+        if (parseInt(distanceToSpecificObject) > 100 && parseInt(distanceToSpecificObject) < 150) {
+            
+            console.log("Objet à proximité !");
+        }
+
         character.position.copy(newPosition);
 
         // Mettre à jour la position de la caméra pour la maintenir derrière le personnage
@@ -292,6 +389,36 @@ export function moveCharacterForward() {
         // Mettre à jour la position de la caméra et la diriger vers le personnage depuis l'arrière
         const backwardVector = new THREE.Vector3(0, 0, -1); // Vecteur regardant vers l'arrière
         const cameraDirection = backwardVector.applyQuaternion(character.quaternion);
+        const lookAtPosition = character.position.clone().add(cameraDirection);
+        
+        camera.position.copy(cameraPosition);
+        camera.lookAt(lookAtPosition);
+    }
+}
+
+
+export function moveCharacterBackward() {
+    
+    if (followCharacter && character) {
+        const speed = 3; // Vitesse de déplacement du personnage
+
+        // Vecteur de direction vers l'arrière (inverse de la direction avant)
+        const backwardVector = new THREE.Vector3(0, 0, -1); // Utilisation de l'axe Z négatif pour reculer
+        backwardVector.applyQuaternion(character.quaternion);
+
+        // Mettre à jour la position du personnage en fonction de sa direction vers l'arrière pour reculer
+        const newPosition = character.position.clone().add(backwardVector.multiplyScalar(speed));
+        character.position.copy(newPosition);
+
+        // Mettre à jour la position de la caméra pour la maintenir devant le personnage
+        const distanceInFront = 100; // Distance devant le personnage
+        const offset = new THREE.Vector3(0, 150, -distanceInFront); // Direction inverse (devant)
+        const rotatedOffset = offset.applyQuaternion(character.quaternion);
+        const cameraPosition = character.position.clone().add(rotatedOffset);
+
+        // Mettre à jour la position de la caméra et la diriger vers le personnage depuis l'avant
+        const forwardVector = new THREE.Vector3(0, 0, 1); // Vecteur regardant vers l'avant
+        const cameraDirection = forwardVector.applyQuaternion(character.quaternion);
         const lookAtPosition = character.position.clone().add(cameraDirection);
         
         camera.position.copy(cameraPosition);
@@ -388,4 +515,22 @@ export function turnCharacterLeft() {
         animateRotation();
     }
 }
+
+export function checkDistance(character, object, radius) {
+    const distance = character.position.distanceTo(object.position);
+
+    return distance <= radius;
+}
+
+// Définir une fonction pour vérifier la distance de manière asynchrone
+export function checkDistanceAsync(character, object, radius) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const isNearObject = checkDistance(character, object, radius);
+            resolve(isNearObject);
+        }, 100); // Simule une opération asynchrone avec un délai de 100 ms
+    });
+}
+
+
 
