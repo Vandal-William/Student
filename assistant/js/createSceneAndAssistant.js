@@ -2,14 +2,13 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 import { RGBELoader } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/loaders/RGBELoader.js';
+import { global } from './global.js';
 
-window.globalData = {};
 let scene;
 let camera
 let mixer;
 let character;
 let followCharacter = false;
-let books;
 let drawerP;
 
 export function createSceneAndAssistant() {
@@ -18,7 +17,7 @@ export function createSceneAndAssistant() {
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Control') {
             followCharacter = true;
-            window.globalData.followCharacter = true;
+            global.followCharacter = true;
         }
     });
     
@@ -38,6 +37,7 @@ export function createSceneAndAssistant() {
     } else {
         // Si la scène n'est pas définie, créer une nouvelle scène
         scene = new THREE.Scene();
+        global.scene = scene;
     }
 
     const renderer = new THREE.WebGLRenderer();
@@ -86,6 +86,7 @@ export function createSceneAndAssistant() {
     const loaderDrawer = new FBXLoader();
     loaderDrawer.load('./fbx/furnitures/drawer/drawer.fbx', function (drawer) {
         drawerP = drawer;
+        global.drawer = drawer;
         const box = new THREE.Box3().setFromObject(drawer); // Obtenir la boîte englobante de l'objet FBX
         const size = new THREE.Vector3();
         box.getSize(size); // Obtenir les dimensions de l'objet FBX
@@ -129,9 +130,7 @@ export function createSceneAndAssistant() {
         const encyclopedias = new FBXLoader();
         encyclopedias.load('./fbx/furnitures/encyclopedia/encyclopedia.fbx', function (encyclopedia) {
             // Positionner le second objet par rapport au premier (le tiroir)
-            books = encyclopedia
             encyclopedia.position.set(-15, 55, 10);
-            window.globalData.encyclopedia = encyclopedia
 
             // Chargement des textures
             const textureLoader = new THREE.TextureLoader();
@@ -150,7 +149,6 @@ export function createSceneAndAssistant() {
                 roughnessMap: paperRoughnessTexture,
                 // Autres propriétés de matériau si nécessaire
             });
-            console.log(encyclopedia)
             // Appliquer le matériau et les textures aux parties spécifiques du modèle
             encyclopedia.traverse(child => {
                 if (child.isMesh) {
@@ -185,7 +183,7 @@ export function createSceneAndAssistant() {
     loader.setPath('./fbx/');
     loader.load('amanda.fbx', function (fbx) {
         character = fbx;
-        window.globalData.character = fbx;
+        global.character = fbx;
         scene.add(character)
 
         // Calculer la boîte englobante du personnage pour obtenir ses dimensions
@@ -202,6 +200,7 @@ export function createSceneAndAssistant() {
         box.getSize(size);
         const maxDim = Math.max(size.x, size.y, size.z);
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        global.camera = camera;
         const fov = camera.fov * (Math.PI / 180);
         const distance = Math.abs(maxDim / Math.sin(fov / 2));
 
@@ -300,6 +299,7 @@ export function changeCharacterAnimation(animationName, fbx) {
 
         if (!mixer) {
             mixer = new THREE.AnimationMixer(fbx);
+            global.mixer = mixer;
         }
 
         const anima = mixer.clipAction(anim.animations[0]);
@@ -368,14 +368,18 @@ export function moveCharacterForward() {
         // Mettre à jour la position du personnage en fonction de sa direction inverse pour avancer
         const newPosition = character.position.clone().add(forwardVector.multiplyScalar(speed));
 
-        // Vérifier la distance entre le personnage et l'objet
-        const radius = 100; // Rayon autour du personnage pour la détection de l'objet
-        const distanceToSpecificObject = character.position.distanceTo(drawerP.position);
-        console.log(parseInt(distanceToSpecificObject));
+        const distanceToDrawer = character.position.distanceTo(drawerP.position);
+        console.log(parseInt(distanceToDrawer));
 
-        if (parseInt(distanceToSpecificObject) > 100 && parseInt(distanceToSpecificObject) < 150) {
+        if (parseInt(distanceToDrawer) > 100 && parseInt(distanceToDrawer) < 150) {
             
-            console.log("Objet à proximité !");
+            const menu_drawer = document.getElementById('menu-drawer');
+            menu_drawer.style.right = `${drawerP.position.x}px`;
+            menu_drawer.style.top = `${drawerP.position.y + 300}px`;
+            menu_drawer.style.display = "block";
+        }else{
+            const menu_drawer = document.getElementById('menu-drawer');
+            menu_drawer.style.display = "none";
         }
 
         character.position.copy(newPosition);
@@ -408,6 +412,21 @@ export function moveCharacterBackward() {
 
         // Mettre à jour la position du personnage en fonction de sa direction vers l'arrière pour reculer
         const newPosition = character.position.clone().add(backwardVector.multiplyScalar(speed));
+        
+        const distanceToDrawer = character.position.distanceTo(drawerP.position);
+        console.log(parseInt(distanceToDrawer));
+
+        if (parseInt(distanceToDrawer) > 100 && parseInt(distanceToDrawer) < 150) {
+            
+            const menu_drawer = document.getElementById('menu-drawer');
+            menu_drawer.style.right = `${drawerP.position.x}px`;
+            menu_drawer.style.top = `${drawerP.position.y + 300}px`;
+            menu_drawer.style.display = "block";
+        }else{
+            const menu_drawer = document.getElementById('menu-drawer');
+            menu_drawer.style.display = "none";
+        }
+
         character.position.copy(newPosition);
 
         // Mettre à jour la position de la caméra pour la maintenir devant le personnage
@@ -514,22 +533,6 @@ export function turnCharacterLeft() {
 
         animateRotation();
     }
-}
-
-export function checkDistance(character, object, radius) {
-    const distance = character.position.distanceTo(object.position);
-
-    return distance <= radius;
-}
-
-// Définir une fonction pour vérifier la distance de manière asynchrone
-export function checkDistanceAsync(character, object, radius) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const isNearObject = checkDistance(character, object, radius);
-            resolve(isNearObject);
-        }, 100); // Simule une opération asynchrone avec un délai de 100 ms
-    });
 }
 
 

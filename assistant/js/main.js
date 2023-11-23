@@ -1,4 +1,4 @@
-import { createSceneAndAssistant } from './createSceneAndAssistant.js';
+import { createSceneAndAssistant} from './createSceneAndAssistant.js';
 import {navigate} from './navigate.js';
 import { interactWithAssistant } from './interactWithAssistant.js';
 import { moveCharacter } from './moveCharacter.js';
@@ -7,7 +7,6 @@ import {searchStackOverflow} from './searchStackOverflow.js';
 
 createSceneAndAssistant();
 moveCharacter();
-
 const close = document.querySelectorAll('.close');
 close.forEach(cross => {
     cross.addEventListener('click', () => {
@@ -15,7 +14,7 @@ close.forEach(cross => {
     })
 })
 
-const amanda_menu = document.querySelectorAll('.amanda-menu');
+const amanda_menu = document.querySelectorAll('.menu-li');
 amanda_menu.forEach(li => {
     li.addEventListener('click', (e) => {
         const value = e.target.id

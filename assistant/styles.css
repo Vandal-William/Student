@@ -1,0 +1,164 @@
+
+*{
+    margin: 0;
+    padding: 0;
+  }
+
+  body{
+    overflow: hidden;
+  }
+
+  li:hover{
+    background: #ffffff4c;
+  }
+
+  .review{
+    position: absolute;
+    bottom: 10px;
+    background: #00000071;
+    color: #fff;
+    padding: 10px;
+    width: 480px;
+    right: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: none;
+  }
+
+  .select-lang{
+    padding: 5px;
+    width: 20%;
+    background: #000;
+    color: #fff;
+    border: none;
+  }
+
+  .review-button{
+    padding: 5px;
+    width: 20%;
+    border: none;
+    background: orange;
+  }
+
+  .close{
+    padding: 10px; 
+    color: red; 
+    font-weight: bold; 
+    cursor: pointer;
+  }
+
+  /* Menu */
+
+  .menu{
+    position:absolute;
+    background-color:rgba(0, 0, 0, 0.463);
+    width:200px;
+    height: auto;
+  }
+
+  .menu-bar{
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    align-items: center;
+    background-color: orange;
+  }
+
+  .menu-ul{
+    list-style-type: none; 
+    padding: 5px;
+  }
+
+  .menu-li{
+    padding: 5px; 
+    color: #fff;
+    cursor: pointer;
+  }
+
+  /*============== Div results review ================*/
+
+  .results-analysis{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .point{
+    font-weight: bold;
+    font-size: 17px;
+  }
+
+  .response{
+    width: 80%;
+    
+  }
+
+  .exemple{
+    width: 100%;
+    font-weight: bold;
+
+  }
+
+  .resume{
+    width: 100%;
+    font-style: italic;
+  }
+
+  /*========= overflow-form =========*/
+
+  .input-overflow{
+    padding: 5px;
+    width: 50%;
+    background: #000;
+    color: #fff;
+    border: none;
+  }
+
+  /*======== results div stack overflow =========*/
+
+  .result-row{
+    padding: 10px;
+    gap: 10px;
+    background-color: #ffffffaf;
+    margin-bottom: 10px;
+  }
+
+  .result-title{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .result-id{
+    padding: 10px;
+  }
+
+  .result-link{
+    text-decoration: none;
+    color: black;
+
+  }
+
+  /*========== Loader ==============*/
+
+  .loader {
+    border: 4px solid #eaeaea;
+    border-top: 4px solid orange;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

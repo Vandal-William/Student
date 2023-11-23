@@ -16,7 +16,7 @@ export function searchStackOverflow(message, tag) {
     resultAssistFlow.appendChild(resultsDiv);
     const loadingIndicator = loading(resultsDiv);
 
-    const url = `${apiUrl}?key=${apiKey}&site=stackoverflow&order=desc&sort=activity&intitle=${message}&tagged=${tag}`;
+    const url = `${apiUrl}?key=${apiKey}&site=stackoverflow&order=desc&sort=activity&intitle=${message}`;
 
     fetch(url)
       .then(response => response.json())
