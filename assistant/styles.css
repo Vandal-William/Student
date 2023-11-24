@@ -7,6 +7,168 @@
   body{
     overflow: hidden;
   }
+  /*========================= Header =====================================*/
+
+  .header{
+    background-color: #00000085;
+    color: orange;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    
+  }
+
+  .wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+  }
+
+  .brandName{
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    line-height: 20px;
+  }
+
+  .brd{
+    margin-left: 15px;
+    font-size: 15px;
+    color: #fff;
+  }
+
+  .nav-ul{
+    list-style-type: none;
+  }
+
+  .nav-li{
+    width: 30px;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .nav-li img{
+    width: 100%;
+  }
+
+  /*==================== Connexion ===============================*/
+
+  .connexion{
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    background: #000000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .title-connexion{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: #fff;
+  }
+  .form-connexion{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 10px;
+    width: 50%;
+    height: 50%;
+  }
+  .label-connexion{
+    color: #fff;
+  }
+  .input-connexion{
+    padding: 10px;
+    
+  }
+  .submit-connexion{
+    padding: 10px;
+    margin-top: 40px;
+    background: orange;
+    border: none;
+  }
+  .error{
+    color: orange;
+  }
+
+  /*================== Avatar form ===================*/
+    .choose-avatar{
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #00000097;
+    }
+
+    .form-avatar{
+      width: 50%;
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      row-gap: 30px;
+    }
+
+    .column{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .choose-label{
+      color: orange;
+      font-size: 20px;
+    }
+    .choose-input{
+      padding: 5px;
+      font-size: 20px;
+    }
+    .avatars{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .avatar{
+     width: 45%;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+    }
+    .avatar-div{
+      width: 100%;
+    }
+
+    .avatar-div img{
+      width: 100%;
+      height: 100%;
+    }
+    .choose-radio{
+      opacity: 0;
+    }
+    .submit-choose{
+     padding: 10px;
+     font-size: 20px;
+     background: orange;
+     border: none;
+     cursor: pointer;
+    }
+
+    .select{
+      cursor: pointer;
+    }
+
+    .checked{
+      border: 5px solid orange;
+    }
+
+  /* ========================================================= */
 
   li:hover{
     background: #ffffff4c;
@@ -41,22 +203,16 @@
     background: orange;
   }
 
-  .close{
-    padding: 10px; 
-    color: red; 
-    font-weight: bold; 
-    cursor: pointer;
-  }
-
+  
   /* Menu */
-
+  
   .menu{
     position:absolute;
     background-color:rgba(0, 0, 0, 0.463);
     width:200px;
     height: auto;
   }
-
+  
   .menu-bar{
     padding: 5px;
     display: flex;
@@ -65,15 +221,21 @@
     align-items: center;
     background-color: orange;
   }
-
+  
   .menu-ul{
     list-style-type: none; 
     padding: 5px;
   }
-
+  
   .menu-li{
     padding: 5px; 
     color: #fff;
+    cursor: pointer;
+  }
+  .close{
+    padding: 10px; 
+    color: red; 
+    font-weight: bold; 
     cursor: pointer;
   }
 

@@ -1,6 +1,7 @@
-import {changeCharacterAnimation} from "./createSceneAndAssistant.js";
-import { moveCharacterForward, moveCharacterBackward ,turnCharacterRight, turnCharacterLeft } from "./createSceneAndAssistant.js";
+import {changeCharacterAnimation} from "./addCharacterToScene.js";
+import { moveCharacterForward, moveCharacterBackward ,turnCharacterRight, turnCharacterLeft } from "./addCharacterToScene.js";
 import { global } from "./global.js";
+import { updateCharacterPosition } from "./fireBase/firestore.js";
 
 export function moveCharacter(){
 
@@ -17,37 +18,44 @@ export function moveCharacter(){
                 ArrowUp = true;
                 if(!animationPlaying){
                     animationPlaying = true;
-                    changeCharacterAnimation("WalkInPlace", global.character);
+                    changeCharacterAnimation("WalkInPlace", global.characterObject);
+                    
                 }
                 if(ArrowUp){
-                    moveCharacterForward();
+                    moveCharacterForward(global.camera, global.drawer);
+                    updateCharacterPosition(global.userId, global.docId, global.characterObject);
                 }
             } else if (event.key === 'ArrowRight') {
                 ArrowRight = true;
                 if(!animationPlaying){
                     animationPlaying = true;
-                    changeCharacterAnimation("WalkInPlace", global.character);
+                    changeCharacterAnimation("WalkInPlace", global.characterObject);
+                    
                 }
                 if(ArrowRight){
-                    turnCharacterRight();
+                    turnCharacterRight(global.camera);
+                    updateCharacterPosition(global.userId, global.docId, global.characterObject);
                 }
             } else if (event.key === 'ArrowLeft') {
                 ArrowLeft = true;
                 if(!animationPlaying){
                     animationPlaying = true;
-                    changeCharacterAnimation("WalkInPlace", global.character);
+                    changeCharacterAnimation("WalkInPlace", global.characterObject);
                 }
                 if(ArrowLeft){
-                    turnCharacterLeft();
+                    turnCharacterLeft(global.camera);
+                    updateCharacterPosition(global.userId, global.docId, global.characterObject); 
                 }
             }else if (event.key === 'ArrowDown') {
                 ArrowDown = true;
                 if(!animationPlaying){
                     animationPlaying = true;
-                    changeCharacterAnimation("WalkInPlace", global.character);
+                    changeCharacterAnimation("WalkInPlace", global.characterObject);
+                   
                 }
                 if(ArrowDown){
-                    moveCharacterBackward();
+                    moveCharacterBackward(global.camera, global.drawer);
+                    updateCharacterPosition(global.userId, global.docId, global.characterObject);
                 }
             }
         }
@@ -56,7 +64,7 @@ export function moveCharacter(){
     document.addEventListener('keyup', function(event) {
         if (event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
             animationPlaying = false;
-            changeCharacterAnimation("Idle", global.character);
+            changeCharacterAnimation("Idle", global.characterObject);
         }
     });
 

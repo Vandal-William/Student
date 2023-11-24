@@ -9,15 +9,23 @@
 
 <body style="position: relative;">
 
+  <header class="header">
+    <div class="wrapper">
+      <h1 class="brandName">Just <span class="brd">Learn</span></h1>
+      <ul class="nav-ul">
+        <li class="nav-li" title="Docs"> <img src="./logo/docs.svg" alt="Documentation"> </li>
+      </ul>
+    </div>
+  </header>
+
 <!-- MENUS -->
 
   <div id="menu" class="menu" style="display: none;">
     <span class="menu-bar">Amanda <span class="close">X</span></span>
     <ul class="menu-ul">
       <li id="tchat" class="menu-li">Tchat</li>
-      <li id="review" class="menu-li" class="">Review</li>
-      <li id="stack-overflow" class="menu-li" class="">Stack Overflow</li>
-      <li id="projets" class="menu-li" class="">Projets</li> 
+      <li id="review" class="menu-li" class="">Code Review</li>
+      <li id="disconnect" class="menu-li" class="">Se déconnecter</li>
     </ul>
   </div> 
 
@@ -173,29 +181,56 @@
     </div>
   </form>
 
- <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
-  <script>
-    
-    const firebaseConfig = {
-            
-            apiKey: "AIzaSyDXDGJkiUMg2w1CBD-oIfmNCwfr4ZllxTM",
-            authDomain: "students-117c7.firebaseapp.com",
-            databaseURL: "https://students-117c7-default-rtdb.firebaseio.com",
-            projectId: "students-117c7",
-            storageBucket: "students-117c7.appspot.com",
-            messagingSenderId: "586492384664",
-            appId: "1:586492384664:web:68defbe6c018e7397247ed",
-            measurementId: "G-N5Z3T6KEK1"
-            
-          };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-  </script>
+  <!-- Connexion form -->
+
+  <div id="connexion" class="connexion" style="display: flex;">
+    <h1 class="brandName" style="color: orange;">Just <span class="brd">Learn</span></h1>
+    <h2 class="title-connexion">Connexion</h2>
+    <form id="form-connexion" class="form-connexion">
+      <label class="label-connexion" for="mail">E-mail</label>
+      <input class="input-connexion" type="email" name="mail" id="mail">
+      <label class="label-connexion" for="password">Mot de passe</label>
+      <input class="input-connexion" type="password" name="password" id="password">
+      <p id="error" class="error"></p>
+      <button class="submit-connexion">Se connecter</button>
+    </form>
+  </div>
+
+  <!-- Avatar-form -->
+
+  <div id="choose-div" class="choose-avatar" style="display: none;">
+
+    <form id="form-avatar" class="form-avatar">
+
+      <div class="column">
+        <label class="choose-label" for="pseudo">Choisir un pseudo</label>
+        <input class="choose-input" type="text" name="pseudo" id="pseudo">
+      </div>
+
+      <div class="avatars">
+
+        <div class="avatar">
+          <div class="avatar-div amanda" >
+            <img src="./fbx/images/amanda.png" alt="">
+          </div>
+          <input class="choose-radio" type="radio" name="choose" id="amanda" value="amanda">
+          <label class="choose-label select" for="amanda">Amanda</label>
+        </div>
+
+        <div class="avatar">
+          <div class="avatar-div david">
+            <img src="./fbx/images/david.png" alt="">
+          </div>
+          <input class="choose-radio" type="radio" name="choose" id="david" value="david">
+          <label class="choose-label select" for="david">David</label>
+        </div>
+        
+      </div>
+
+      <button class="submit-choose">Valider</button>
+    </form>
+  </div>
+
   <script type="module" src="./js/main.js"></script>
 </body>
 </html>
