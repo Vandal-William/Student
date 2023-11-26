@@ -3,13 +3,13 @@ import { collection, getDocs, addDoc, setDoc, doc, onSnapshot } from 'https://ww
 import { loading } from "../loading.js";
 import { verifyIfUser } from "./authWithFirebase.js";
 
-export async function getCollectionInFirestore(userID) {
+export async function getCollectionInFirestore(collectio) {
 
     // Déclaration d'une variable pour stocker les résultats
 let mesResultats = [];
 
 // Récupération des données depuis Firestore
-const querySnapshot = await getDocs(collection(firestore, userID));
+const querySnapshot = await getDocs(collection(firestore, collectio));
 
 // Itération à travers les résultats et stockage dans la variable 'mesResultats'
 querySnapshot.forEach((doc) => {

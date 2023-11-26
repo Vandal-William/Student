@@ -222,7 +222,6 @@ export function moveCharacterForward(camera, drawerP) {
         // Mettre à jour la position du personnage en fonction de sa direction inverse pour avancer
         const newPosition = character.position.clone().add(forwardVector.multiplyScalar(speed));
         const distanceToDrawer = character.position.distanceTo(drawerP.position);
-        console.log(parseInt(distanceToDrawer));
 
         if (parseInt(distanceToDrawer) > 100 && parseInt(distanceToDrawer) < 150) {
             
@@ -267,7 +266,6 @@ export function moveCharacterBackward(camera, drawerP) {
         const newPosition = character.position.clone().add(backwardVector.multiplyScalar(speed));
         
         const distanceToDrawer = character.position.distanceTo(drawerP.position);
-        console.log(parseInt(distanceToDrawer));
 
         if (parseInt(distanceToDrawer) > 100 && parseInt(distanceToDrawer) < 150) {
             

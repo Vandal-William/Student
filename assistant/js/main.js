@@ -6,6 +6,7 @@ import { createScene} from './createScene.js';
 import { addInFirestoreCollection } from "./fireBase/firestore.js";
 import { global } from './global.js';
 import { mainLoading } from './mainLoading.js';
+import { getLessonTitle } from './Ateliers/getLessonTitle.js';
 
 
 mainLoading(document.body)
@@ -106,3 +107,14 @@ form_review.addEventListener('submit', (e) => {
     reader.readAsText(files[0]);
     
 });
+
+const recapsLink = document.getElementById('recaps');
+recapsLink.addEventListener('click', (e) => {
+    const recapsDiv = document.getElementById('recaps-div');
+    recapsDiv.style.display = "block";
+    const content = document.getElementById('markdownPreview');
+    getLessonTitle(content);
+
+})
+
+

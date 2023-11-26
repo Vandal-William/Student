@@ -1,3 +1,4 @@
+@import url('./recaps.css');
 
 *{
     margin: 0;
@@ -53,7 +54,7 @@
     width: 100%;
   }
 
-  /*==================== Connexion ===============================*/
+  /*==================== Connexion =========container-content======================*/
 
   .connexion{
     height: 100vh;
@@ -95,6 +96,61 @@
     color: orange;
   }
 
+  /*================= chat  ==========================*/
+
+  .chat{
+    width: 400px;
+    position: absolute;
+    height: 500px;
+    right: 1px;
+    bottom: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  } 
+  /* global */
+  .info-bar{ 
+    padding: 5px;
+    display: flex;
+    color: #fff;
+    background-color: orange;
+    font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chat-history{
+    width: 90%;
+    height: 350px;
+    margin: auto;
+    padding: 10px;
+    background: black;
+    font-size: 12px;
+  }
+
+  .chat-form{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .input-chat{
+    width: 70%;
+    background: black;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    outline-color: black;
+  }
+
+  .submit-chat{
+    padding: 10px;
+    background: orange;
+    width: 20%;
+    border: none;
+  }
   /*================== Avatar form ===================*/
     .choose-avatar{
       position: absolute;
@@ -168,6 +224,35 @@
       border: 5px solid orange;
     }
 
+    /*================== Global container =======================*/
+    .main-container{
+      position: absolute;
+      background: #fff;
+      width: 100%;
+      height: 100vh;
+      z-index: 1;
+    }
+    .sub-container{
+      width: 100%;
+      height: 95vh;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .container-menu{
+      width: 30%;
+      height: 95vh;
+      background: #eaeaea;
+    }
+
+    .container-content{
+      width: 70%;
+      padding: 10px;
+      height: 95vh;
+      background: #fff;
+      overflow: auto;
+   
+    }
   /* ========================================================= */
 
   li:hover{

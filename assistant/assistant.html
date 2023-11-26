@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amanda</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
 <body style="position: relative;">
@@ -40,78 +40,17 @@
 
 <!-- Chat -->
 
-  <div id="chat"
-    style="
-      width: 400px;
-      position: absolute;
-      height: 500px;
-      right: 1px;
-      bottom: 5px;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      display: none;
-    "
-  >
-    <div class="chat-bar"
-    style="
-      padding: 5px;
-      display: flex;
-      color: #fff;
-      background-color: orange;
-      font-weight: bold;
-      justify-content: space-between;
-    "
-    >
-    <span>Amanda</span>
-    <span class="close" style="color: red; cursor: pointer;">X</span>
+  <div id="chat" class="chat" style="display: none;">
+    <div class="info-bar">
+      <span>Amanda</span>
+      <span class="close">X</span>
     </div>
 
-    <div class="chat-history" 
-      style="
-        width: 90%;
-        height: 350px;
-        margin: auto;
-        padding: 10px;
-        background: black;
-        font-size: 12px;
-      "
-    >
-    </div>
+    <div class="chat-history"></div>
 
-    <form 
-      id="chat-form"
-      style="
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-      "
-    >
-      <input 
-        type="text" 
-        name="message"
-        placeholder="Tapez votre message..."
-        style="
-          width: 70%;
-          background: black;
-          color: #fff;
-          padding: 10px;
-          border: none;
-          outline-color: black;
-        "
-      >
-      <button
-        style="
-          padding: 10px;
-          background: orange;
-          width: 20%;
-          border: none;
-        "
-      >
-        Envoyer
-      </button>
+    <form id="chat-form" class="chat-form">
+      <input class="input-chat" type="text" name="message" placeholder="Tapez votre message...">
+      <button class="submit-chat">Envoyer</button>
     </form>
   </div>
 
@@ -231,6 +170,24 @@
     </form>
   </div>
 
+  <!-- fiche Récaps -->
+
+  <div id="recaps-div" class="main-container" style="display: none;">
+
+    <div class="info-bar">
+      <span>Recaps</span>
+      <span class="close">X</span>
+    </div>
+
+    <div class="sub-container">
+
+      <div id="recaps-menu" class="container-menu"> </div>
+
+      <div id="markdownPreview" class="container-content"> </div>
+        
+    </div>
+
+  </div>
   <script type="module" src="./js/main.js"></script>
 </body>
 </html>
