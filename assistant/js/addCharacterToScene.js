@@ -3,7 +3,6 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.mod
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 import { global } from './global.js';
 import { getCollectionInFirestore } from './fireBase/firestore.js';
-import { updateCharacterPosition } from './fireBase/firestore.js';
 
 
 let character;
@@ -50,34 +49,28 @@ export async function addCharacterToscene(pseudo, characterName, scene, camera, 
      
         // Positionner le personnage au centre et en bas de l'écran
         const offsetY = -100; // Calculer l'offset en Y du personnage pour le placer en bas de l'écran
-        if(data && data.characterPosition) {
 
-            character.position.set(data.characterPosition.x, data.characterPosition.y, data.characterPosition.z);
-            scene.add(character)
-            console.log("personnage : " + character.position.x, character.position.y, character.position.z)
-            console.log("data : " + data.characterPosition.x, data.characterPosition.y, data.characterPosition.z)
-            // Calculer la distance pour placer la caméra
-            const size = new THREE.Vector3();
-            box.getSize(size);
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const fov = camera.fov * (Math.PI / 180);
-            const distance = Math.abs(maxDim / Math.sin(fov / 2));
+        character.position.set(0, -100, 0);
+        scene.add(character);
+        // Calculer la distance pour placer la caméra
+        const size = new THREE.Vector3();
+        box.getSize(size);
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const fov = camera.fov * (Math.PI / 180);
+        const distance = Math.abs(maxDim / Math.sin(fov / 2));
+
+        // Positionner la caméra devant le personnage dès le départ
+        const distanceFront = 300; // Distance devant le personnage
+        const offsetYb = 150; // Ajustez cette valeur selon votre besoin
+        const cameraOffset = new THREE.Vector3(0, offsetYb, distanceFront);
+        const rotatedOffset = cameraOffset.applyQuaternion(character.quaternion);
+        const cameraPosition = character.position.clone().add(rotatedOffset); // Position de la caméra par rapport au personnage
+
+        // Créer la caméra
     
-            // Positionner la caméra devant le personnage dès le départ
-            const distanceFront = 300; // Distance devant le personnage
-            const offsetYb = 150; // Ajustez cette valeur selon votre besoin
-            const cameraOffset = new THREE.Vector3(0, offsetYb, distanceFront);
-            const rotatedOffset = cameraOffset.applyQuaternion(character.quaternion);
-            const cameraPosition = character.position.clone().add(rotatedOffset); // Position de la caméra par rapport au personnage
-            console.log("camera : " + cameraPosition.x, cameraPosition.y, cameraPosition.z)
-    
-            // Créer la caméra
+        camera.position.copy(cameraPosition);
+        camera.lookAt(character.position); // Regarder le personnage dès le départ
         
-            camera.position.copy(cameraPosition);
-            camera.lookAt(character.position);
-            console.log("camera lookAt personnage : " + character.position.x, character.position.y, character.position.z) // Regarder le personnage dès le départ
-            
-        }
 
          function animate() {
  
@@ -193,7 +186,6 @@ export function updateCameraPositionBehind(camera) {
     if (followCharacter && character) {
         const distanceBehind = -200; // Distance derrière le personnage
         const characterPosition = character.position.clone(); // Position du personnage
-
         // Calculer la nouvelle position de la caméra derrière le personnage
         const offset = new THREE.Vector3(0, 150, distanceBehind);
         const rotatedOffset = offset.applyQuaternion(character.quaternion);
@@ -229,7 +221,6 @@ export function moveCharacterForward(camera, drawerP) {
 
         // Mettre à jour la position du personnage en fonction de sa direction inverse pour avancer
         const newPosition = character.position.clone().add(forwardVector.multiplyScalar(speed));
-
         const distanceToDrawer = character.position.distanceTo(drawerP.position);
         console.log(parseInt(distanceToDrawer));
 

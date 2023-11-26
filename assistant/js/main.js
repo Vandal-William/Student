@@ -4,10 +4,11 @@ import {htmlAnalysis} from './htmlAnalysis.js';
 import { authWithFirebase, signOutWithFirebase, verifyIfUser } from './fireBase/authWithFirebase.js';
 import { createScene} from './createScene.js';
 import { addInFirestoreCollection } from "./fireBase/firestore.js";
-import { addCharacterToscene } from "./addCharacterToScene.js";
 import { global } from './global.js';
+import { mainLoading } from './mainLoading.js';
 
 
+mainLoading(document.body)
 createScene()
 
 const connect_form = document.getElementById('form-connexion');

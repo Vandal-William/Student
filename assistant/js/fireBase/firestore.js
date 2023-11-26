@@ -1,5 +1,7 @@
 import { firestore } from "./initFirebase.js";
 import { collection, getDocs, addDoc, setDoc, doc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
+import { loading } from "../loading.js";
+import { verifyIfUser } from "./authWithFirebase.js";
 
 export async function getCollectionInFirestore(userID) {
 
@@ -31,59 +33,53 @@ export async function addInFirestoreCollection (userID, username, character){
 
         id:userID,
         characterName: character,
-        characterObject:null,
         pseudo: username,
-        drawer:null,
-        scene : null,
-        camera : null,
-        mixer : null,
-        characterPosition: {x:null, y:null, z:null},
-        isFollowCharacter: false,
-        renderer : null,
+        statut : "student",
         message:[]
     });
 
-        console.log("Document written with ID: ", docRef.id);
+    if(docRef.id){
+        const submit_button = document.getElementById('submit-choose');
+        submit_button.setAttribute("disabled", "true");
+        loading(submit_button);
+        verifyIfUser()
+    }
+
     } catch (e) {
         console.error("Error adding document: ", e);
     }
 }
 
-export async function updateInFirestoreCollection(userID, docID, dataToUpdate) {
-    try {
-        const docRef = doc(firestore, userID, docID);
-        await setDoc(docRef, dataToUpdate, { merge: true });
-        console.log("Document updated successfully!");
-    } catch (error) {
-        console.error("Error updating document: ", error);
-    }
-}
+export function UpdateInfoUser(userID, docID, { characterName, pseudo, message }) {
+    const characterDocRef = doc(firestore, userID, docID);
 
-export function updateCharacterPosition(userID, docID, characterObject) {
-    const positionListener = onSnapshot(doc(firestore, userID, docID), (docSnapshot) => {
-        let newPositionData = docSnapshot.data();
+    // Récupérer le document actuel dans Firestore
+    getDoc(characterDocRef)
+        .then((doc) => {
+            if (doc.exists()) {
+                // Récupérer le tableau de messages existant ou initialiser un tableau vide
+                const currentMessages = doc.data().message || [];
 
-        if (newPositionData && newPositionData.characterPosition) {
-            newPositionData.characterPosition = characterObject.position;
+                // Ajouter le nouveau message au tableau
+                currentMessages.push(message);
 
-            const characterDocRef = doc(firestore, userID, docID);
-            setDoc(characterDocRef, {
-                characterPosition: {
-                    x: newPositionData.characterPosition.x,
-                    y: newPositionData.characterPosition.y,
-                    z: newPositionData.characterPosition.z
-                } 
-        
-            }, { merge: true })
-            .then(() => {
-                console.log('Character position updated in Firestore.');
-            })
-            .catch((error) => {
-                console.error('Error updating character position: ', error);
-            });
-        }
-    });
-    return positionListener;
+                // Mettre à jour le document avec le tableau de messages mis à jour
+                return setDoc(characterDocRef, {
+                    characterName: characterName,
+                    pseudo: pseudo,
+                    message: currentMessages
+                }, { merge: true });
+            } else {
+                console.error('Document does not exist');
+                throw new Error('Document not found');
+            }
+        })
+        .then(() => {
+            console.log('Character position updated in Firestore.');
+        })
+        .catch((error) => {
+            console.error('Error updating character position: ', error);
+        });
 }
 
 export function createDataCollectionIfNewUser(userId){

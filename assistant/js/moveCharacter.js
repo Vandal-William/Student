@@ -1,7 +1,6 @@
 import {changeCharacterAnimation} from "./addCharacterToScene.js";
 import { moveCharacterForward, moveCharacterBackward ,turnCharacterRight, turnCharacterLeft } from "./addCharacterToScene.js";
 import { global } from "./global.js";
-import { updateCharacterPosition } from "./fireBase/firestore.js";
 
 export function moveCharacter(){
 
@@ -23,7 +22,6 @@ export function moveCharacter(){
                 }
                 if(ArrowUp){
                     moveCharacterForward(global.camera, global.drawer);
-                    updateCharacterPosition(global.userId, global.docId, global.characterObject);
                 }
             } else if (event.key === 'ArrowRight') {
                 ArrowRight = true;
@@ -34,7 +32,6 @@ export function moveCharacter(){
                 }
                 if(ArrowRight){
                     turnCharacterRight(global.camera);
-                    updateCharacterPosition(global.userId, global.docId, global.characterObject);
                 }
             } else if (event.key === 'ArrowLeft') {
                 ArrowLeft = true;
@@ -43,8 +40,7 @@ export function moveCharacter(){
                     changeCharacterAnimation("WalkInPlace", global.characterObject);
                 }
                 if(ArrowLeft){
-                    turnCharacterLeft(global.camera);
-                    updateCharacterPosition(global.userId, global.docId, global.characterObject); 
+                    turnCharacterLeft(global.camera); 
                 }
             }else if (event.key === 'ArrowDown') {
                 ArrowDown = true;
@@ -55,7 +51,6 @@ export function moveCharacter(){
                 }
                 if(ArrowDown){
                     moveCharacterBackward(global.camera, global.drawer);
-                    updateCharacterPosition(global.userId, global.docId, global.characterObject);
                 }
             }
         }

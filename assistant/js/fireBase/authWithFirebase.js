@@ -6,10 +6,7 @@ import { global } from "../global.js";
 import { moveCharacter } from '../moveCharacter.js';
 
 
-let hasData;
-
 export  function authWithFirebase(email, password) {
-    
     // Utilisez votre instance Firebase existante 'app'
     const auth = getAuth(app);
     
@@ -20,11 +17,10 @@ export  function authWithFirebase(email, password) {
         if(user){
             const userData = await getCollectionInFirestore(user.uid);
             if(userData.length === 0){
-                hasData = false;
                 const choose_div = document.getElementById('choose-div');
                 choose_div.style.display = "flex";
             }else{
-                hasData = true;
+                window.location.reload();
             }
         }
       })
@@ -44,7 +40,6 @@ export function signOutWithFirebase() {
     const auth = getAuth(app);
     // Déconnexion de l'utilisateur actuel
     auth.signOut().then(() => {
-
     if (global.scene && global.characterObject) {
         global.scene.remove(global.characterObject);
         global.characterObject = null
@@ -57,24 +52,33 @@ export function signOutWithFirebase() {
 }
 
 export function verifyIfUser(){
-
+    const loaderContent = document.querySelector('.loaderContent')
     const auth = getAuth(app);
 
     // Écouteur d'événements pour détecter les changements d'état d'authentification
     auth.onAuthStateChanged(async user => {
+
         if (user) {
+            
+            if(loaderContent){
+                loaderContent.style.display = "none";
+            }
 
             global.userId = user.uid;
             const connect_div = document.getElementById('connexion');
             connect_div.style.display = "none";
             const userData = await getCollectionInFirestore(user.uid);
-            console.log(userData)
+
             if(userData.length === 0){
+
                 const choose_div = document.getElementById('choose-div');
                 choose_div.style.display = "flex";
+
             }else{
-                
-                
+
+                const choose_div = document.getElementById('choose-div');
+                choose_div.style.display = "none";
+
                 await addCharacterToscene(
                     userData[0].data.pseudo,
                     userData[0].data.characterName,
@@ -86,6 +90,9 @@ export function verifyIfUser(){
             }
           
         } else {
+            if(loaderContent){
+                loaderContent.style.display = "none";
+            }
             const connect_div = document.getElementById('connexion');
             connect_div.style.display = "flex";
            
