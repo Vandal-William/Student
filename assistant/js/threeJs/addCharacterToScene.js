@@ -51,7 +51,8 @@ export async function addCharacterToscene(pseudo, characterName, scene, camera, 
         // Positionner le personnage au centre et en bas de l'écran
         const offsetY = -100; // Calculer l'offset en Y du personnage pour le placer en bas de l'écran
 
-        character.position.set(0, -100, 0);
+        character.position.set(0, 10, 0);
+        character.scale.set(0.8, 0.8, 0.8);
         scene.add(character);
         // Calculer la distance pour placer la caméra
         const size = new THREE.Vector3();
@@ -61,8 +62,8 @@ export async function addCharacterToscene(pseudo, characterName, scene, camera, 
         const distance = Math.abs(maxDim / Math.sin(fov / 2));
 
         // Positionner la caméra devant le personnage dès le départ
-        const distanceFront = 300; // Distance devant le personnage
-        const offsetYb = 150; // Ajustez cette valeur selon votre besoin
+        const distanceFront = 200; // Distance devant le personnage
+        const offsetYb = 100; // Ajustez cette valeur selon votre besoin
         const cameraOffset = new THREE.Vector3(0, offsetYb, distanceFront);
         const rotatedOffset = cameraOffset.applyQuaternion(character.quaternion);
         const cameraPosition = character.position.clone().add(rotatedOffset); // Position de la caméra par rapport au personnage
@@ -166,12 +167,12 @@ export function changeCharacterAnimation(animationName, fbx) {
 
 export function updateCameraPositionFront(camera) {
     if (character) {
-        const distanceFront = 300; // Distance devant le personnage
+        const distanceFront = 100; // Distance devant le personnage
 
         const forwardVector = new THREE.Vector3(0, 0, -1); // Vecteur regardant vers l'avant
         forwardVector.applyQuaternion(character.quaternion);
 
-        const offset = new THREE.Vector3(0, 150, distanceFront);
+        const offset = new THREE.Vector3(0, 100, distanceFront);
         const rotatedOffset = offset.applyQuaternion(character.quaternion);
         const newPosition = character.position.clone().add(rotatedOffset);
 
@@ -185,10 +186,10 @@ export function updateCameraPositionFront(camera) {
 
 export function updateCameraPositionBehind(camera) {
     if (followCharacter && character) {
-        const distanceBehind = -200; // Distance derrière le personnage
+        const distanceBehind = -100; // Distance derrière le personnage
         const characterPosition = character.position.clone(); // Position du personnage
         // Calculer la nouvelle position de la caméra derrière le personnage
-        const offset = new THREE.Vector3(0, 150, distanceBehind);
+        const offset = new THREE.Vector3(0, 100, distanceBehind);
         const rotatedOffset = offset.applyQuaternion(character.quaternion);
         const newPosition = characterPosition.clone().add(rotatedOffset);
 
