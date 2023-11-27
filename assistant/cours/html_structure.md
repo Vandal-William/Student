@@ -2,8 +2,6 @@
 
 # La structure d'une page web
 
-## Qu'est ce que le HTML
-
 Le HTML, ou Hypertext Markup Language, est un langage qui utilise des balises, ouvrantes et fermantes, encadrées par des chevrons < > pour marquer et structurer le contenu d'une page Web.
 
 Exemple :

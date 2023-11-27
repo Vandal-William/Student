@@ -1,4 +1,4 @@
-import { loading } from './loading.js';
+import { loading } from '../site/loading.js';
 
 const apiKey = 'saqRSu6vJ1AkbHM8FSrr1A((';
 const resultAssistFlow = document.getElementById('result-div');

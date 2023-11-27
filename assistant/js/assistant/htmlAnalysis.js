@@ -1,5 +1,5 @@
 import { createResponseElement } from "./createResponseElement.js";
-import { loading } from './loading.js';
+import { loading } from '../site/loading.js';
 
 const resultsDiv = document.createElement('div');
 const results = document.getElementById('result-div');

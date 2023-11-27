@@ -1,9 +1,9 @@
 import { getCollectionInFirestore } from "../fireBase/firestore.js";
 import { global } from "../global.js";
-import { activeMarked } from "./marked.js";
+import { convertMarkdown } from "./convertMarkdown.js";
 
 
-export async function getLessonTitle(content){
+export async function getLessonTitle(){
 
     // Sélectionnez le conteneur de l'accordéon
     const user = global.userId;
@@ -51,7 +51,7 @@ export async function getLessonTitle(content){
                     });
 
                     contentElement.addEventListener('click', () => {
-                        activeMarked(l.content, content)
+                        convertMarkdown(l.path)
                         
                     })
 

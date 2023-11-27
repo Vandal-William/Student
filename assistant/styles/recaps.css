@@ -1,0 +1,36 @@
+pre {
+    padding: 20px;
+    font-size: 14px;
+    margin: 10px;
+    background: #4e4e4e;
+    color: #40E0D0;
+    border-radius: 5px;
+  }
+
+  #markdownPreview > div {
+    padding: 10px;
+  }
+
+  #markdownPreview > div > h1 {
+      margin: 20px 0 20px 0;
+      text-align: center;
+  }
+
+  #markdownPreview > div > h2 {
+      margin: 15px 0 15px 0;
+  }
+
+  #markdownPreview > div > p{
+      margin: 10px 0 10px 0;
+      padding: 20px;
+      background: #eaeaea;
+      border-radius: 5px;
+      box-shadow: 1px 1px 2px black;
+      margin: 10px;
+  }
+
+  #markdownPreview > div > p > code {
+      font-weight: bold;
+      font-size: 16px;
+      color: red;
+  }

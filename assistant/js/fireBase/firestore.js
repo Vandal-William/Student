@@ -1,6 +1,6 @@
 import { firestore } from "./initFirebase.js";
 import { collection, getDocs, addDoc, setDoc, doc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
-import { loading } from "../loading.js";
+import { loading } from "../site/loading.js";
 import { verifyIfUser } from "./authWithFirebase.js";
 
 export async function getCollectionInFirestore(collectio) {

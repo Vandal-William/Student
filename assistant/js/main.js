@@ -1,11 +1,11 @@
-import {navigate} from './navigate.js';
-import { interactWithAssistant } from './interactWithAssistant.js';
-import {htmlAnalysis} from './htmlAnalysis.js';
+import {navigate} from './site/navigate.js';
+import { interactWithAssistant } from './assistant/interactWithAssistant.js';
+import {htmlAnalysis} from './assistant/htmlAnalysis.js';
 import { authWithFirebase, signOutWithFirebase, verifyIfUser } from './fireBase/authWithFirebase.js';
-import { createScene} from './createScene.js';
+import { createScene} from './threeJs/createScene.js';
 import { addInFirestoreCollection } from "./fireBase/firestore.js";
 import { global } from './global.js';
-import { mainLoading } from './mainLoading.js';
+import { mainLoading } from './site/mainLoading.js';
 import { getLessonTitle } from './Ateliers/getLessonTitle.js';
 
 
@@ -112,8 +112,7 @@ const recapsLink = document.getElementById('recaps');
 recapsLink.addEventListener('click', (e) => {
     const recapsDiv = document.getElementById('recaps-div');
     recapsDiv.style.display = "block";
-    const content = document.getElementById('markdownPreview');
-    getLessonTitle(content);
+    getLessonTitle();
 
 })
 

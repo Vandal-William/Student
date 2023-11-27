@@ -1,8 +1,8 @@
 // Importer les modules Three.js nécessaires
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
-import { global } from './global.js';
-import { getCollectionInFirestore } from './fireBase/firestore.js';
+import { global } from '../global.js';
+import { getCollectionInFirestore } from '../fireBase/firestore.js';
 
 
 let character;
@@ -31,7 +31,8 @@ export async function addCharacterToscene(pseudo, characterName, scene, camera, 
     const data = userData[0].data
     const docId = userData[0].id
     global.docId = docId
-    console.log(pseudo)
+    const showPseudo = document.getElementById('userName');
+    showPseudo.textContent = pseudo;
 
      // Charger le modèle FBX du personnage
      const loader = new FBXLoader();

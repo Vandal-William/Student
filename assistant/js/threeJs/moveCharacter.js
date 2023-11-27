@@ -1,6 +1,6 @@
 import {changeCharacterAnimation} from "./addCharacterToScene.js";
 import { moveCharacterForward, moveCharacterBackward ,turnCharacterRight, turnCharacterLeft } from "./addCharacterToScene.js";
-import { global } from "./global.js";
+import { global } from "../global.js";
 
 export function moveCharacter(){
 

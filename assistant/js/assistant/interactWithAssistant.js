@@ -1,7 +1,7 @@
 import { assistantResponse } from "./assistantResponse.js";
 import { userRequest } from "./userRequest.js";
-import { changeCharacterAnimation } from "./addCharacterToScene.js";
-import { global } from "./global.js";
+import { changeCharacterAnimation } from "../threeJs/addCharacterToScene.js";
+import { global } from "../global.js";
 
 const chatHistory = document.querySelector(".chat-history");
 

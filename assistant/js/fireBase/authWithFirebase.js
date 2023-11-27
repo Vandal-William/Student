@@ -1,9 +1,9 @@
 import { app } from "./initFirebase.js";
 import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
 import { getCollectionInFirestore } from "./firestore.js";
-import { addCharacterToscene } from "../addCharacterToScene.js";
+import { addCharacterToscene } from "../threeJs/addCharacterToScene.js";
 import { global } from "../global.js";
-import { moveCharacter } from '../moveCharacter.js';
+import { moveCharacter } from '../threeJs/moveCharacter.js';
 
 
 export  function authWithFirebase(email, password) {

@@ -8,6 +8,28 @@ body{
     overflow: hidden;
 }
 
+.brandName{
+    color: orange;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    line-height: 20px;
+  }
+
+.brd{
+    margin-left: 15px;
+    font-size: 15px;
+    color: #fff;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+}
+
 .invisible{
     display: none;
 }
@@ -30,10 +52,6 @@ body{
     color: #fff;
 }
 
-#title-link:hover{
-    color: lightcoral;
-}
-
 .nav{
     list-style-type: none;
     display: flex;
@@ -48,7 +66,7 @@ body{
 }
 
 .nav-li:hover{
-    color: lightcoral;
+    color: orange;
     
 }
 
@@ -58,7 +76,7 @@ body{
 }
 
 .nav-a:hover{
-    color: lightcoral;
+    color: orange;
 }
 
 #adminLinkSettings{
@@ -157,8 +175,4 @@ body{
     margin: auto;
     background-color: #fff;
     overflow-y:scroll;
-}
-
-.assistant-link{
-    display: none;
 }
